@@ -1,0 +1,53 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+opacity = 0.8
+blur = true
+
+decorations = "buttonless"
+
+padding.x = 5
+padding.y = 5
+
+class.general = "Alacritty"
+class.instance = "Alacritty"
+
+option_as_alt = "Both"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+size = 14
+
+normal.family = "Hack Nerd Font"
+normal.style = "Regular"
+
+bold.family = "Hack Nerd Font"
+bold.style = "Bold"
+
+italic.family = "Hack Nerd Font"
+italic.style = "Italic"
+
+bold_italic.family = "Hack Nerd Font"
+bold_italic.style = "Bold Italic"
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+# Изменение дефолтного биндинга по причине того, что на Ctrl + Space
+# в MacOS забиндил переключение языка
+[[keyboard.bindings]]
+key = "Space"
+mods = "Shift|Alt"
+action = "ToggleViMode"
+
+# https://github.com/alacritty/alacritty/issues/7608#issuecomment-1975006973
+# Отключить звук уведомлений в MacOS:
+# https://github.com/alacritty/alacritty/issues/3014#issuecomment-1659329460h
+[[keyboard.bindings]]
+chars = "\u001f"
+key = "Slash"
+mods = "Control"
