@@ -16,3 +16,7 @@ inlayHints.typeHints.hideClosureInitialization = false
 [language-server.rust-analyzer.config.check]
 command = "clippy"
 auto-format = true
+
+# [[language]]
+# name = "json"
+# config = { "provideFormatter" = true }
