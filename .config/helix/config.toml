@@ -6,6 +6,8 @@ line-number = "relative"
 auto-format = true
 auto-save = true
 bufferline = "multiple"
+terminal.command = "xterm"
+terminal.args = ["-e"]
 
 [editor.cursor-shape]
 insert = "bar"
