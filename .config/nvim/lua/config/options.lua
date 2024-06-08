@@ -4,3 +4,5 @@
 
 -- disable cursor flicker in alacritty + zellij
 vim.opt.termsync = false
+
+vim.o.guifont = "Hack Nerd Font:h14"
