@@ -39,12 +39,12 @@ bold_italic.style = "Bold Italic"
 [colors]
 draw_bold_text_with_bright_colors = true
 
-# Изменение дефолтного биндинга по причине того, что на Ctrl + Space
-# в MacOS забиндил переключение языка
-[[keyboard.bindings]]
-key = "Space"
-mods = "Shift|Alt"
-action = "ToggleViMode"
+# # Изменение дефолтного биндинга по причине того, что на Ctrl + Space
+# # в MacOS забиндил переключение языка
+# [[keyboard.bindings]]
+# key = "Space"
+# mods = "Shift|Alt"
+# action = "ToggleViMode"
 
 # https://github.com/alacritty/alacritty/issues/7608#issuecomment-1975006973
 # Отключить звук уведомлений в MacOS:
