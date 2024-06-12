@@ -5,4 +5,13 @@
 -- disable cursor flicker in alacritty + zellij
 vim.opt.termsync = false
 
-vim.o.guifont = "Hack Nerd Font:h14"
+vim.o.guifont = "Fira Code:h14"
+
+-- Enable wrap
+vim.o.wrap = true
+
+-- Autom. read file when changed outside of Vim
+vim.o.autoread = true
+
+-- Autom. save file before some action
+vim.o.autowrite = true
