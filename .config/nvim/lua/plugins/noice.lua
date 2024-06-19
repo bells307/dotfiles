@@ -6,7 +6,7 @@ return {
         mini = {
           win_options = {
             -- for transparent background
-            winblend = 0,
+            -- winblend = 0,
           },
         },
       },

@@ -4,7 +4,7 @@ return {
     opts = {
       ui = {
         -- looks better with transparent background
-        border = "rounded",
+        -- border = "rounded",
       },
     },
   },

@@ -8,6 +8,5 @@ return {
     keys = {
       { "<leader>D", ":lua require('dropbar.api').pick()<CR>", desc = "Dropbar pick" },
     },
-    enabled = false,
   },
 }

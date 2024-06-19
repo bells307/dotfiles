@@ -32,6 +32,6 @@ require("lazy").setup({
   },
   ui = {
     -- better for transparent background
-    border = "rounded",
+    -- border = "rounded",
   },
 })
