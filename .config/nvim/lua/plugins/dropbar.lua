@@ -6,7 +6,7 @@ return {
     },
     event = { "BufReadPre" },
     keys = {
-      { "<leader>D", ":lua require('dropbar.api').pick()<CR>", desc = "Dropbar pick" },
+      { "<leader>td", ":lua require('dropbar.api').pick()<CR>", desc = "Toggle Dropbar" },
     },
   },
 }

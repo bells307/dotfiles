@@ -2,6 +2,17 @@ return {
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    keys = {
+      {
+        "<a-o>",
+        desc = "Increment Selection",
+      },
+      {
+        "<a-i>",
+        desc = "Decrement Selection",
+        mode = "x",
+      },
+    },
     opts = {
       ensure_installed = { "bash", "c", "diff", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
       -- Autoinstall languages that are not installed
@@ -14,6 +25,15 @@ return {
         additional_vim_regex_highlighting = { "ruby" },
       },
       indent = { enable = true, disable = { "ruby" } },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<A-o>",
+          node_incremental = "<A-o>",
+          scope_incremental = false,
+          node_decremental = "<A-i>",
+        },
+      },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -32,46 +52,3 @@ return {
     end,
   },
 }
-
--- return {
---   {
---     "nvim-treesitter/nvim-treesitter",
---     build = ":TSUpdate",
---     keys = {
---       {
---         "<c-space>",
---         desc = "Increment Selection",
---       },
---       {
---         "<bs>",
---         desc = "Decrement Selection",
---         mode = "x",
---       },
---     },
---     opts = {
---       ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "javascript", "html" },
---       sync_install = false,
---       highlight = {
---         enable = true,
---       },
---       indent = {
---         enable = true,
---       },
---       incremental_selection = {
---         enable = true,
---         keymaps = {
---           init_selection = "<C-space>",
---           node_incremental = "<C-space>",
---           scope_incremental = false,
---           node_decremental = "<bs>",
---         },
---       },
---     },
---     config = function(_, opts)
---       require("nvim-treesitter.configs").setup(opts)
---     end,
---   },
---   {
---     "nvim-treesitter/playground",
---   },
--- }
