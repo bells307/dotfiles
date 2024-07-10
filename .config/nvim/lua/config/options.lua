@@ -63,3 +63,9 @@ opt.scrolloff = 10
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 opt.hlsearch = true
+
+-- Enable auto write
+opt.autowrite = true
+
+-- Use spaces instead of tabs
+opt.expandtab = true

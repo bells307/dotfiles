@@ -27,6 +27,7 @@ return {
       indent = { enable = true, disable = { "ruby" } },
       incremental_selection = {
         enable = true,
+        -- helix like incremental selection
         keymaps = {
           init_selection = "<A-o>",
           node_incremental = "<A-o>",
