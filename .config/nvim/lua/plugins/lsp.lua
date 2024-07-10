@@ -132,6 +132,11 @@ return {
             --   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             -- end, "[T]oggle Inlay [H]ints")
           end
+
+          vim.diagnostic.config({
+            virtual_text = true,
+            underline = false,
+          })
         end,
       })
 
