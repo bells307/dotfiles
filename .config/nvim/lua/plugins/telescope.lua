@@ -83,7 +83,7 @@ return {
       vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "Find Existing Buffers" })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set("n", "<leader>/", function()
+      vim.keymap.set("n", "<leader>fb", function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
           winblend = 0,
