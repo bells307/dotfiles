@@ -45,6 +45,7 @@ return {
       vim.diagnostic.config({
         virtual_text = true,
         underline = false,
+        float = { border = "rounded" },
       })
 
       vim.api.nvim_create_autocmd("LspAttach", {

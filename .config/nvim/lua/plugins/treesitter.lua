@@ -2,6 +2,9 @@ return {
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     keys = {
       {
         "<a-o>",
@@ -35,13 +38,35 @@ return {
           node_decremental = "<A-i>",
         },
       },
+      textobjects = {
+        select = {
+          enable = true,
+
+          -- Automatically jump forward to textobj, similar to targets.vim
+          lookahead = true,
+
+          keymaps = {
+            ["af"] = { query = "@function.outer", desc = "function" },
+            ["if"] = { query = "@function.inner", desc = "function" },
+            ["ac"] = "@class.outer",
+            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+          },
+          include_surrounding_whitespace = true,
+        },
+        move = {
+          enable = true,
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+        },
+      },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
       -- Prefer git instead of curl in order to improve connectivity in some environments
       require("nvim-treesitter.install").prefer_git = true
-      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup(opts)
 
       -- There are additional nvim-treesitter modules that you can use to interact
@@ -51,5 +76,19 @@ return {
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "BufReadPre",
+    opts = { mode = "cursor", max_lines = 3 },
+    keys = {
+      {
+        "<leader>tc",
+        function()
+          require("treesitter-context").toggle()
+        end,
+        desc = "Toggle Treesitter Context",
+      },
+    },
   },
 }
