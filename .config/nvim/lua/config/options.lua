@@ -3,6 +3,8 @@
 
 local opt = vim.opt
 
+opt.termguicolors = true
+
 -- Make line numbers default
 opt.number = true
 -- You can also add relative line numbers, to help with jumping.
