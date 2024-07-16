@@ -66,11 +66,15 @@ return {
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "ui-select")
 
-      -- See `:help telescope.builtin`
       local builtin = require("telescope.builtin")
+      local utils = require("telescope.utils")
+
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope Help Tags" })
       vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find Keymaps" })
       vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
+      vim.keymap.set("n", "<leader>f.", function()
+        builtin.find_files({ cwd = utils.buffer_dir() })
+      end, { desc = "Find Files (Current Buffer directory)" })
       vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "Show Telescope Pickers" })
       vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Find Current Word" })
       vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find by Grep" })
@@ -79,11 +83,11 @@ return {
       end, { desc = "Find Diagnostics (Buffer)" })
       vim.keymap.set("n", "<leader>fD", builtin.diagnostics, { desc = "Find Diagnostics (Workspace)" })
       vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "Find Resume" })
-      vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
+      vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
       vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "Find Existing Buffers" })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set("n", "<leader>fb", function()
+      vim.keymap.set("n", "<leader>fB", function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
           winblend = 0,
@@ -93,7 +97,7 @@ return {
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set("n", "<leader>fo", function()
+      vim.keymap.set("n", "<leader>fO", function()
         builtin.live_grep({
           grep_open_files = true,
           prompt_title = "Live Grep in Open Files",
