@@ -7,12 +7,17 @@ return {
       require("which-key").setup()
 
       -- Document existing key chains
-      require("which-key").register({
-        ["<leader>c"] = { name = "Code", _ = "which_key_ignore" },
-        ["<leader>f"] = { name = "Find", _ = "which_key_ignore" },
-        ["<leader>t"] = { name = "Toggle", _ = "which_key_ignore" },
-        ["<leader>u"] = { name = "UI", _ = "which_key_ignore" },
-        ["<leader>b"] = { name = "Buffer", _ = "which_key_ignore" },
+      require("which-key").add({
+        { "<leader>b", group = "Buffer" },
+        { "<leader>b_", hidden = true },
+        { "<leader>c", group = "Code" },
+        { "<leader>c_", hidden = true },
+        { "<leader>f", group = "Find" },
+        { "<leader>f_", hidden = true },
+        { "<leader>t", group = "Toggle" },
+        { "<leader>t_", hidden = true },
+        { "<leader>u", group = "UI" },
+        { "<leader>u_", hidden = true },
       })
     end,
   },

@@ -32,7 +32,7 @@ return {
     require("mini.files").setup(opts)
 
     local show_dotfiles = true
-    local filter_show = function(fs_entry)
+    local filter_show = function(_)
       return true
     end
     local filter_hide = function(fs_entry)
@@ -98,13 +98,6 @@ return {
         map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical or "<C-w>v", "vertical", false)
         map_split(buf_id, opts.mappings and opts.mappings.go_in_horizontal_plus or "<C-w>S", "horizontal", true)
         map_split(buf_id, opts.mappings and opts.mappings.go_in_vertical_plus or "<C-w>V", "vertical", true)
-      end,
-    })
-
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "MiniFilesActionRename",
-      callback = function(event)
-        LazyVim.lsp.on_rename(event.data.from, event.data.to)
       end,
     })
   end,

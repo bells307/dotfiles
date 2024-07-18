@@ -81,6 +81,7 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPre",
     opts = { mode = "cursor", max_lines = 3 },
+    enabled = false,
     keys = {
       {
         "<leader>tc",
