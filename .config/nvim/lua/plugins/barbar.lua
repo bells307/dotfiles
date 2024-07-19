@@ -10,6 +10,7 @@ return {
       vim.g.barbar_auto_setup = false
     end,
     keys = {
+      { "<leader>bf", "<Cmd>BufferPick<CR>", desc = "Buffer Pick" },
       { "<leader>bp", "<Cmd>BufferPin<CR>", desc = "Toggle Pin" },
       { "<leader>bP", "<Cmd>BufferCloseAllButPinned<CR>", desc = "Delete Non-Pinned Buffers" },
       { "<leader>bo", "<Cmd>BufferCloseAllButCurrent<CR>", desc = "Delete Other Buffers" },
