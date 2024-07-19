@@ -3,6 +3,8 @@
 
 local opt = vim.opt
 
+opt.termsync = false
+
 opt.termguicolors = true
 
 -- Make line numbers default
