@@ -1,16 +1,18 @@
 return {
   {
-    "akinsho/toggleterm.nvim",
-    version = "*",
+    "numToStr/FTerm.nvim",
     opts = {
-      open_mapping = [[<c-\>]],
+      border = "double",
+      dimensions = {
+        height = 0.9,
+        width = 0.9,
+      },
     },
-    lazy = false,
     config = function(opts)
-      require("toggleterm").setup(opts)
+      require("FTerm").setup(opts)
 
-      local map = vim.keymap.set
-      map("t", "<esc>", [[<C-\><C-n>]], { silent = true })
+      vim.keymap.set("n", "<C-t>", '<CMD>lua require("FTerm").toggle()<CR>')
+      vim.keymap.set("t", "<C-t>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
     end,
   },
 }
