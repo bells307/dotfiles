@@ -18,6 +18,8 @@ return {
         { "<leader>t_", hidden = true },
         { "<leader>u", group = "UI" },
         { "<leader>u_", hidden = true },
+        { "<leader>h", group = "Hop" },
+        { "<leader>h_", hidden = true },
       })
     end,
   },
