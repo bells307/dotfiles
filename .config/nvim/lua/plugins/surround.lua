@@ -9,7 +9,7 @@ return {
         find_left = "gsF", -- Find surrounding (to the left)
         highlight = "gsh", -- Highlight surrounding
         replace = "gsr", -- Replace surrounding
-        update_n_lies = "gsn", -- Update `n_lines`
+        update_n_lines = "gsn", -- Update `n_lines`
       },
     },
   },
