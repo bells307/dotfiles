@@ -9,7 +9,7 @@ return {
       sections = {
         lualine_c = { "macro_recording", "%S" },
       },
-      theme = "catppuccin",
+      theme = "everforest",
     },
   },
 }
