@@ -24,17 +24,16 @@ multiplier = 3
 [font]
 size = 14
 
-
-normal.family = "Fira Code"
+normal.family = "FiraCode Nerd Font"
 normal.style = "Regular"
 
-bold.family = "Fira Code"
+bold.family = "FiraCode Nerd Font"
 bold.style = "Bold"
 
-italic.family = "Fira Code"
+italic.family = "FiraCode Nerd Font"
 italic.style = "Italic"
 
-bold_italic.family = "Fira Code"
+bold_italic.family = "FiraCode Nerd Font"
 bold_italic.style = "Bold Italic"
 
 # normal.family = "Hack Nerd Font"
