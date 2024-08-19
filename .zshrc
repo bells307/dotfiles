@@ -4,8 +4,6 @@ export PATH="/opt/homebrew/opt/llvm/bin:/Users/bells307/go/bin:/Users/bells307/.
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -110,13 +108,13 @@ alias ls="eza --color=always --icons=always"
 alias cat="bat"
 alias dotfiles="git --git-dir=$HOME/dotfiles --work-tree=$HOME"
 
-alias ssh_dzen="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_medium="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_likee="ssh -t dikanskii@crawler010.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_tpulse="ssh -t dikanskii@crawler010.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_youtube="ssh -t dikanskii@crawler011.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_ymaps="ssh -t dikanskii@c6l1.kribrum -p 1022 'tmux new-session -s bells307 -A'"
-alias ssh_dgis="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s bells307 -A'"
+alias ssh_dzen="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s dzen -A'"
+alias ssh_medium="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s medium -A'"
+alias ssh_likee="ssh -t dikanskii@crawler010.kribrum -p 1022 'tmux new-session -s likee -A'"
+alias ssh_tpulse="ssh -t dikanskii@crawler010.kribrum -p 1022 'tmux new-session -s tinkoff_pulse -A'"
+alias ssh_youtube="ssh -t dikanskii@crawler011.kribrum -p 1022 'tmux new-session -s youtube -A'"
+alias ssh_ymaps="ssh -t dikanskii@c6l1.kribrum -p 1022 'tmux new-session -s yandex_maps -A'"
+alias ssh_dgis="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s dgis -A'"
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"

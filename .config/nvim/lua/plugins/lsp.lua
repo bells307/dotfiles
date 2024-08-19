@@ -29,7 +29,6 @@ return {
           map("<leader>cs", require("telescope.builtin").lsp_document_symbols, "Document symbols")
           map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
           map("<leader>cr", vim.lsp.buf.rename, "Rename")
-          map("<leader><leader>", vim.lsp.buf.code_action, "Code action")
           map("<leader>ca", vim.lsp.buf.code_action, "Code action")
           map("K", vim.lsp.buf.hover, "Hover Documentation")
 

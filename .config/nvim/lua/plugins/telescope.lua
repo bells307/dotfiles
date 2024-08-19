@@ -84,7 +84,7 @@ return {
       vim.keymap.set("n", "<leader>fD", builtin.diagnostics, { desc = "Find Diagnostics (Workspace)" })
       vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "Find Resume" })
       vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
-      vim.keymap.set("n", "<leader>fb", function()
+      vim.keymap.set("n", "<leader><leader>", function()
         builtin.buffers({ sort_lastused = true })
       end, { desc = "Find Existing Buffers" })
 
