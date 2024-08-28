@@ -91,6 +91,10 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Keybindings
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
 # users are encouraged to define aliases within a top-level file in
