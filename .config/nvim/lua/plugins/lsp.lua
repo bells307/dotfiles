@@ -30,6 +30,8 @@ return {
           map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
           map("<leader>cr", vim.lsp.buf.rename, "Rename")
           map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          map("<leader>cl", vim.lsp.codelens.refresh, "CodeLens Refresh")
+          map("<leader>cR", vim.lsp.codelens.run, "CodeLens Run")
           map("K", vim.lsp.buf.hover, "Hover Documentation")
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
