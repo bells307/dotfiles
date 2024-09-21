@@ -46,10 +46,10 @@ return {
           lookahead = true,
 
           keymaps = {
-            ["af"] = { query = "@function.outer", desc = "function" },
-            ["if"] = { query = "@function.inner", desc = "function" },
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
             ["ac"] = "@class.outer",
-            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+            ["ic"] = "@class.inner",
           },
           include_surrounding_whitespace = true,
         },
