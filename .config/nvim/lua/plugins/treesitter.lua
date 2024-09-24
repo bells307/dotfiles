@@ -65,10 +65,10 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ["<leader>a"] = "@parameter.inner",
+            ["<leader>sa"] = "@parameter.inner",
           },
           swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
+            ["<leader>sA"] = "@parameter.inner",
           },
         },
       },
@@ -92,7 +92,6 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPre",
     opts = { mode = "cursor", max_lines = 3 },
-    enabled = false,
     keys = {
       {
         "<leader>tc",
