@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-vi-mode git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete vi-mode) 
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,3 +123,4 @@ alias ssh_dgis="ssh -t dikanskii@crawler006.kribrum -p 1022 'tmux new-session -s
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(tmuxifier init -)"
+
