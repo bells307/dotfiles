@@ -87,8 +87,9 @@ return {
       vim.keymap.set("n", "<leader>fD", builtin.diagnostics, { desc = "Find Diagnostics (Workspace)" })
       vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "Find Resume" })
       vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
+      vim.keymap.set("n", "<leader>fj", builtin.jumplist, { desc = "Find items from Jumplist" })
       vim.keymap.set("n", "<leader><leader>", function()
-        builtin.buffers({ sort_lastused = true })
+        builtin.buffers({ sort_lastused = true, sort_mru = true })
       end, { desc = "Find Existing Buffers" })
 
       -- Slightly advanced example of overriding default behavior and theme
