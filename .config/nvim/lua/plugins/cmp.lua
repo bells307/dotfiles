@@ -1,51 +1,29 @@
-local cmp_config = function(_, opts)
+local opts = function(_, opts)
+  vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
   local cmp = require("cmp")
-  local luasnip = require("luasnip")
-  luasnip.config.setup({})
-
-  local has_words_before = function()
-    unpack = unpack or table.unpack
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
-
+  local auto_select = true
   local base_opts = {
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body)
+        require("luasnip").lsp_expand(args.body)
       end,
     },
-    completion = { completeopt = "menu,menuone,noinsert" },
+    auto_brackets = {}, -- configure any filetype to auto add brackets
+    completion = {
+      completeopt = "menu,menuone,noinsert" .. (auto_select and "" or ",noselect"),
+    },
+    preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
     mapping = cmp.mapping.preset.insert({
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif vim.snippet.active({ direction = 1 }) then
-          vim.schedule(function()
-            vim.snippet.jump(1)
-          end)
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif vim.snippet.active({ direction = -1 }) then
-          vim.schedule(function()
-            vim.snippet.jump(-1)
-          end)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
       ["<C-b>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
       ["<Enter>"] = cmp.mapping.confirm({ select = true }),
+      ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+      ["<C-CR>"] = function(fallback)
+        cmp.abort()
+        fallback()
+      end,
     }),
     sources = {
       { name = "nvim_lsp" },
@@ -54,8 +32,7 @@ local cmp_config = function(_, opts)
     },
   }
 
-  local merged_opts = vim.tbl_deep_extend("keep", base_opts, opts)
-  cmp.setup(merged_opts)
+  return vim.tbl_deep_extend("keep", base_opts, opts)
 end
 
 return {
@@ -71,11 +48,12 @@ return {
           end
           return "make install_jsregexp"
         end)(),
+        opts = {},
       },
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
     },
-    config = cmp_config,
+    opts = opts,
   },
 }
