@@ -13,20 +13,17 @@ return {
         },
       },
     },
-    ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       opts.sources = opts.sources or {}
       table.insert(opts.sources, { name = "crates" })
     end,
   },
 
-  -- Add Rust & related to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "rust", "ron" } },
   },
 
-  -- Ensure Rust debugger is installed
   {
     "williamboman/mason.nvim",
     optional = true,
@@ -47,9 +44,12 @@ return {
           vim.keymap.set("n", "gp", function()
             vim.cmd.RustLsp("parentModule")
           end, { desc = "Rust Parent Module", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>a", function()
+            vim.cmd.RustLsp("codeAction")
+          end, { silent = true, buffer = bufnr })
         end,
         default_settings = {
-          -- rust-analyzer language server configuration
           ["rust-analyzer"] = {
             cargo = {
               allFeatures = true,
@@ -58,7 +58,6 @@ return {
                 enable = true,
               },
             },
-            -- Add clippy lints for Rust.
             checkOnSave = true,
             procMacro = {
               enable = true,
@@ -77,16 +76,16 @@ return {
     end,
   },
 
-  -- Correctly setup lspconfig for Rust 🚀
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
         taplo = {
-          keys = {
-            {
-              "K",
-              function()
+          on_attach = function(_, bufnr)
+            vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "", {
+              noremap = true,
+              silent = true,
+              callback = function()
                 if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
                   require("crates").show_popup()
                 else
@@ -94,19 +93,9 @@ return {
                 end
               end,
               desc = "Show Crate Documentation",
-            },
-          },
+            })
+          end,
         },
-      },
-    },
-  },
-
-  {
-    "nvim-neotest/neotest",
-    optional = true,
-    opts = {
-      adapters = {
-        ["rustaceanvim.neotest"] = {},
       },
     },
   },

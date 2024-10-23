@@ -4,7 +4,7 @@ return {
     dependencies = {
       {
         "williamboman/mason.nvim",
-        opts = { ensure_installed = { "delve" } },
+        opts = { ensure_installed = { "delve", "gopls" } },
       },
       {
         "leoluz/nvim-dap-go",

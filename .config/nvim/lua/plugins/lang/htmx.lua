@@ -1,13 +1,13 @@
 return {
   {
     "williamboman/mason.nvim",
-    opts = { ensure_installed = { "marksman" } },
+    opts = { ensure_installed = { "htmx-lsp" } },
   },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        marksman = { cmd = { "marksman", "server" } },
+        htmx = {},
       },
     },
   },
