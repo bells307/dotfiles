@@ -45,9 +45,13 @@ return {
             vim.cmd.RustLsp("parentModule")
           end, { desc = "Rust Parent Module", buffer = bufnr })
 
-          vim.keymap.set("n", "<leader>a", function()
+          vim.keymap.set("n", "<leader>cC", function()
+            vim.cmd.RustLsp("openCargo")
+          end, { desc = "Rust Open Cargo.toml", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>ca", function()
             vim.cmd.RustLsp("codeAction")
-          end, { silent = true, buffer = bufnr })
+          end, { desc = "Rust Code Action", silent = true, buffer = bufnr })
         end,
         default_settings = {
           ["rust-analyzer"] = {

@@ -20,13 +20,13 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window W
 -- map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
 -- buffers
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer" })
+-- map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+-- map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+-- map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+-- map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+-- map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer" })
 
 -- Clear search with <esc>
 -- map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
