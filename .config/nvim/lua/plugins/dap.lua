@@ -41,7 +41,16 @@ return {
       { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+      { "<leader>dU", function() require("dap").up() end, desc = "DAP Stack Up" },
+      { "<leader>dD", function() require("dap").down() end, desc = "DAP Stack Up" },
+    },
+    opts = {
+      element_mappings = {
+        stacks = {
+          open = "<CR>",
+          expand = "o",
+        },
+      },
     },
   },
   {
