@@ -38,11 +38,11 @@ return {
       { "<leader>do", function() require("dap").step_over() end, desc = "Step Out" },
       { "<leader>dO", function() require("dap").step_out() end, desc = "Step Over" },
       { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
-      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+      -- { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-      { "<leader>dU", function() require("dap").up() end, desc = "DAP Stack Up" },
-      { "<leader>dD", function() require("dap").down() end, desc = "DAP Stack Up" },
+      { "<leader>du", function() require("dap").up() end, desc = "DAP Stack Up" },
+      { "<leader>dd", function() require("dap").down() end, desc = "DAP Stack Down" },
     },
     opts = {
       element_mappings = {
@@ -80,7 +80,7 @@ return {
     dependencies = { "nvim-neotest/nvim-nio" },
     -- stylua: ignore
     keys = {
-      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
+      { "<leader>dU", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
       { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
     },
     opts = {},

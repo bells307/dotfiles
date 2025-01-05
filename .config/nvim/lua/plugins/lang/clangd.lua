@@ -84,7 +84,6 @@ return {
   -- },
   {
     "mfussenegger/nvim-dap",
-    optional = true,
     dependencies = {
       -- Ensure C/C++ debugger is installed
       "williamboman/mason.nvim",

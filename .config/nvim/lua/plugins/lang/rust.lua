@@ -32,9 +32,12 @@ return {
 
   {
     "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended
+    version = "^5", -- Recommended
     ft = { "rust" },
     opts = {
+      dap = {
+        autoload_configurations = false,
+      },
       server = {
         on_attach = function(_, bufnr)
           vim.keymap.set("n", "<leader>dr", function()
