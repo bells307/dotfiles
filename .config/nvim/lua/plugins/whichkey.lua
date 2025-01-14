@@ -22,6 +22,8 @@ return {
         { "<leader>h_", hidden = true },
         { "<leader>s", group = "Swap" },
         { "<leader>s_", hidden = true },
+        { "<leader>r", group = "Rust" },
+        { "<leader>r_", hidden = true },
       })
     end,
   },

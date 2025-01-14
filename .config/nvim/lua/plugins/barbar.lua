@@ -13,32 +13,28 @@ return {
     config = function(_, opts)
       require("barbar").setup(opts)
       local map = vim.api.nvim_set_keymap
-      opts = { noremap = true, silent = true }
 
       -- Move to previous/next
-      map("n", "<A-,>", "<Cmd>BufferPrevious<CR>", opts)
-      map("n", "<A-.>", "<Cmd>BufferNext<CR>", opts)
+      map("n", "<A-,>", "<Cmd>BufferPrevious<CR>", { desc = "Previous buffer" })
+      map("n", "<A-.>", "<Cmd>BufferNext<CR>", { desc = "Next buffer" })
       -- Re-order to previous/next
-      map("n", "<A-<>", "<Cmd>BufferMovePrevious<CR>", opts)
-      map("n", "<A->>", "<Cmd>BufferMoveNext<CR>", opts)
+      map("n", "<A-<>", "<Cmd>BufferMovePrevious<CR>", { desc = "Buffer move previous" })
+      map("n", "<A->>", "<Cmd>BufferMoveNext<CR>", { desc = "Buffer move next" })
       -- Goto buffer in position...
-      map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>", opts)
-      map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>", opts)
-      map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>", opts)
-      map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>", opts)
-      map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>", opts)
-      map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>", opts)
-      map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>", opts)
-      map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>", opts)
-      map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>", opts)
-      map("n", "<A-0>", "<Cmd>BufferLast<CR>", opts)
-      -- Pin/unpin buffer
-      map("n", "<A-p>", "<Cmd>BufferPin<CR>", opts)
+      map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>", { desc = "Go to Buffer 1" })
+      map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>", { desc = "Go to Buffer 2" })
+      map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>", { desc = "Go to Buffer 3" })
+      map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>", { desc = "Go to Buffer 4" })
+      map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>", { desc = "Go to Buffer 5" })
+      map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>", { desc = "Go to Buffer 6" })
+      map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>", { desc = "Go to Buffer 7" })
+      map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>", { desc = "Go to Buffer 8" })
+      map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>", { desc = "Go to Buffer 9" })
+      map("n", "<A-0>", "<Cmd>BufferLast<CR>", { desc = "Go to last buffer" })
       -- Goto pinned/unpinned buffer
       --                 :BufferGotoPinned
       --                 :BufferGotoUnpinned
       -- Close buffer
-      map("n", "<A-c>", "<Cmd>BufferClose<CR>", opts)
       -- Wipeout buffer
       --                 :BufferWipeout
       -- Close commands
@@ -48,16 +44,15 @@ return {
       --                 :BufferCloseBuffersLeft
       --                 :BufferCloseBuffersRight
       -- Magic buffer-picking mode
-      map("n", "<C-p>", "<Cmd>BufferPick<CR>", opts)
+      map("n", "<C-p>", "<Cmd>BufferPick<CR>", { desc = "Pick buffer" })
       -- Sort automatically by...
-      map("n", "<Space>bd", "<Cmd>BufferClose<CR>", opts)
-      map("n", "<Space>bc", "<Cmd>BufferCloseAllButCurrent<CR>", opts)
-      map("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", opts)
-      map("n", "<Space>bp", "<Cmd>BufferPin<CR>", opts)
-      map("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", opts)
-      map("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", opts)
-      map("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", opts)
-      map("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
+      map("n", "<leader>bd", "<Cmd>BufferClose<CR>", { desc = "Close buffer" })
+      map("n", "<leader>bc", "<Cmd>BufferCloseAllButCurrent<CR>", { desc = "Close all buffers but current" })
+      map("n", "<leader>bb", "<Cmd>BufferOrderByBufferNumber<CR>", { desc = "Order buffers by number" })
+      map("n", "<leader>bp", "<Cmd>BufferPin<CR>", { desc = "Pin buffer" })
+      map("n", "<leader>bn", "<Cmd>BufferOrderByName<CR>", { desc = "Order buffers by name" })
+      map("n", "<leader>bl", "<Cmd>BufferOrderByLanguage<CR>", { desc = "Order buffers by language" })
+      map("n", "<leader>bw", "<Cmd>BufferOrderByWindowNumber<CR>", { desc = "Order buffers by window number" })
     end,
     version = "^1.0.0",
   },

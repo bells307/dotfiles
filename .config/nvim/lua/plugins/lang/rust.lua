@@ -40,17 +40,37 @@ return {
       },
       server = {
         on_attach = function(_, bufnr)
-          vim.keymap.set("n", "<leader>dr", function()
+          vim.keymap.set("n", "<leader>rd", function()
             vim.cmd.RustLsp("debuggables")
-          end, { desc = "Rust Debuggables", buffer = bufnr })
+          end, { desc = "Debuggables", buffer = bufnr })
 
-          vim.keymap.set("n", "gp", function()
+          vim.keymap.set("n", "<leader>rp", function()
             vim.cmd.RustLsp("parentModule")
-          end, { desc = "Rust Parent Module", buffer = bufnr })
+          end, { desc = "Parent Module", buffer = bufnr })
 
-          vim.keymap.set("n", "<leader>cC", function()
+          vim.keymap.set("n", "<leader>rc", function()
             vim.cmd.RustLsp("openCargo")
-          end, { desc = "Rust Open Cargo.toml", buffer = bufnr })
+          end, { desc = "Open Cargo.toml", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>rk", function()
+            vim.cmd.RustLsp({ "moveItem", "up" })
+          end, { desc = "Move Item Up", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>rj", function()
+            vim.cmd.RustLsp({ "moveItem", "down" })
+          end, { desc = "Move Item Down", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>re", function()
+            vim.cmd.RustLsp("explainError")
+          end, { desc = "Explain Error", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>rd", function()
+            vim.cmd.RustLsp("renderDiagnostic")
+          end, { desc = "Render Diagnostic", buffer = bufnr })
+
+          vim.keymap.set("n", "<leader>rD", function()
+            vim.cmd.RustLsp("relatedDiagnostics")
+          end, { desc = "Related Diagnostics", buffer = bufnr })
 
           vim.keymap.set("n", "<leader>ca", function()
             vim.cmd.RustLsp("codeAction")
