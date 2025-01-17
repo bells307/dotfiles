@@ -19,9 +19,9 @@ return {
       {
         defaults = {
           mappings = {
-            i = { ["<c-enter>"] = "to_fuzzy_refine" },
+            -- i = { ["<c-enter>"] = "to_fuzzy_refine" },
             n = {
-              ["d"] = "delete_buffer",
+              ["d"] = require("telescope.actions").delete_buffer,
             },
           },
         },
