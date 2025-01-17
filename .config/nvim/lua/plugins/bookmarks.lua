@@ -1,6 +1,6 @@
 return {
   "tomasky/bookmarks.nvim",
-  after = "telescope.nvim",
+  -- after = "telescope.nvim",
   event = "VimEnter",
   config = function()
     require("bookmarks").setup({
@@ -25,9 +25,9 @@ return {
       end,
     })
 
-    require("telescope").load_extension("bookmarks")
-    vim.keymap.set("n", "<leader>fb", function()
-      require("telescope").extensions.bookmarks.list()
-    end, { desc = "Find Bookmarks" })
+    -- require("telescope").load_extension("bookmarks")
+    -- vim.keymap.set("n", "<leader>fb", function()
+    --   require("telescope").extensions.bookmarks.list()
+    -- end, { desc = "Find Bookmarks" })
   end,
 }
