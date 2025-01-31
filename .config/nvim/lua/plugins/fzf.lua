@@ -16,11 +16,11 @@ return {
       map("n", "<leader>fk", fzf.keymaps, { desc = "Keymaps" })
       map("n", "<leader>fg", fzf.live_grep, { desc = "Grep" })
       map("n", "<leader>fh", fzf.helptags, { desc = "Help tags" })
-
       map("n", "<leader>fo", fzf.oldfiles, { desc = "Old files" })
       map("n", "<leader>fo", fzf.jumps, { desc = "Jumps" })
       map("n", "<leader><leader>", fzf.buffers, { desc = "Buffers" })
       map("n", "<leader>fc", fzf.profiles, { desc = "Profiles" })
+      map("n", "<leader>fG", fzf.git_status, { desc = "Git status" })
     end,
   },
 }

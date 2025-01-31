@@ -7,7 +7,7 @@ return {
     },
     opts = {
       sections = {
-        lualine_c = { "macro_recording", "%S" },
+        lualine_c = { { "macro_recording", "%S" }, { "filename", path = 1 } },
       },
     },
   },
