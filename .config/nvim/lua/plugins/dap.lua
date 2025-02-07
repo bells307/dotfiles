@@ -52,6 +52,24 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      local dap = require("dap")
+      dap.setup(opts)
+
+      dap.adapters.codelldb = {
+        type = "server",
+        host = "127.0.0.1",
+        --port = "${port}",
+        port = "13777",
+        executable = {
+          command = "lldb-vscode",
+          args = {
+            "--port",
+            "13777",
+          },
+        },
+      }
+    end,
   },
   {
     "jay-babu/mason-nvim-dap.nvim",

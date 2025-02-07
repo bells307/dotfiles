@@ -64,13 +64,13 @@ return {
             vim.cmd.RustLsp("explainError")
           end, { desc = "Explain Error", buffer = bufnr })
 
-          vim.keymap.set("n", "<leader>rd", function()
-            vim.cmd.RustLsp("renderDiagnostic")
-          end, { desc = "Render Diagnostic", buffer = bufnr })
-
-          vim.keymap.set("n", "<leader>rD", function()
-            vim.cmd.RustLsp("relatedDiagnostics")
-          end, { desc = "Related Diagnostics", buffer = bufnr })
+          -- vim.keymap.set("n", "<leader>rd", function()
+          --   vim.cmd.RustLsp("renderDiagnostic")
+          -- end, { desc = "Render Diagnostic", buffer = bufnr })
+          --
+          -- vim.keymap.set("n", "<leader>rD", function()
+          --   vim.cmd.RustLsp("relatedDiagnostics")
+          -- end, { desc = "Related Diagnostics", buffer = bufnr })
 
           vim.keymap.set("n", "<leader>ca", function()
             vim.cmd.RustLsp("codeAction")
