@@ -27,7 +27,7 @@ local function lsp_config(_, opts)
       map("<leader>fC", fzf.lsp_outgoing_calls, "Outgoing calls")
 
       map("<leader>cr", vim.lsp.buf.rename, "Rename")
-      map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+      map("<leader>ca", fzf.lsp_code_actions, "Code action")
       map("<leader>cl", vim.lsp.codelens.refresh, "CodeLens Refresh")
       map("<leader>cR", vim.lsp.codelens.run, "CodeLens Run")
       map("K", vim.lsp.buf.hover, "Hover Documentation")
