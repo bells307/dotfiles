@@ -21,7 +21,6 @@ return {
         opts = {},
       },
     },
-
     -- stylua: ignore
     keys = {
       { "<leader>d", "", desc = "+debug", mode = {"n", "v"} },

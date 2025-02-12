@@ -14,23 +14,24 @@ local function lsp_config(_, opts)
 
       local fzf = require("fzf-lua")
 
-      map("gd", vim.lsp.buf.definition, "Go to definition")
-      map("gD", vim.lsp.buf.declaration, "Go to declaration")
-      map("fd", fzf.diagnostics_document, "Diagnostics (buffer)")
-      map("fD", fzf.diagnostics_workspace, "Diagnostics (workspace)")
-      map("gr", fzf.lsp_references, "Go to references")
-      map("gI", fzf.lsp_implementations, "Go to implentations")
-      map("gy", fzf.lsp_typedefs, "Type definition")
-      map("<leader>fs", fzf.lsp_document_symbols, "Document symbols")
-      map("<leader>fS", fzf.lsp_workspace_symbols, "Workspace symbols")
-      map("<leader>fc", fzf.lsp_incoming_calls, "Incoming calls")
-      map("<leader>fC", fzf.lsp_outgoing_calls, "Outgoing calls")
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = event.buf, desc = "Go to declaration" })
+      vim.keymap.set("n", "fd", fzf.diagnostics_document, { buffer = event.buf, desc = "Diagnostics (buffer)" })
+      vim.keymap.set("n", "fD", fzf.diagnostics_workspace, { buffer = event.buf, desc = "Diagnostics (workspace)" })
+      vim.keymap.set("n", "gr", fzf.lsp_references, { buffer = event.buf, desc = "Go to references" })
+      vim.keymap.set("n", "gI", fzf.lsp_implementations, { buffer = event.buf, desc = "Go to implentations" })
+      vim.keymap.set("n", "gy", fzf.lsp_typedefs, { buffer = event.buf, desc = "Type definition" })
+      vim.keymap.set("n", "<leader>fs", fzf.lsp_document_symbols, { buffer = event.buf, desc = "Document symbols" })
+      vim.keymap.set("n", "<leader>fS", fzf.lsp_workspace_symbols, { buffer = event.buf, desc = "Workspace symbols" })
+      vim.keymap.set("n", "<leader>fc", fzf.lsp_incoming_calls, { buffer = event.buf, desc = "Incoming calls" })
+      vim.keymap.set("n", "<leader>fC", fzf.lsp_outgoing_calls, { buffer = event.buf, desc = "Outgoing calls" })
 
-      map("<leader>cr", vim.lsp.buf.rename, "Rename")
-      map("<leader>ca", fzf.lsp_code_actions, "Code action")
-      map("<leader>cl", vim.lsp.codelens.refresh, "CodeLens Refresh")
-      map("<leader>cR", vim.lsp.codelens.run, "CodeLens Run")
-      map("K", vim.lsp.buf.hover, "Hover Documentation")
+      vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
+      vim.keymap.set("n", "<leader>ca", fzf.lsp_code_actions, { buffer = event.buf, desc = "Code action" })
+      vim.keymap.set("i", "<a-cr>", fzf.lsp_code_actions, { buffer = event.buf, desc = "Code action" }) -- intellij like
+      vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.refresh, { buffer = event.buf, desc = "CodeLens Refresh" })
+      vim.keymap.set("n", "<leader>cR", vim.lsp.codelens.run, { buffer = event.buf, desc = "CodeLens Run" })
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Hover Documentation" })
 
       local client = vim.lsp.get_client_by_id(event.data.client_id)
       if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
@@ -48,12 +49,6 @@ local function lsp_config(_, opts)
   require("mason").setup()
 
   local ensure_installed = vim.tbl_keys(opts.servers or {})
-  vim.list_extend(ensure_installed, {
-    "stylua",
-    "gopls",
-    "pyright",
-  })
-
   require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
   require("mason-lspconfig").setup({
@@ -74,7 +69,6 @@ return {
       { "williamboman/mason.nvim", config = true },
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-      { "folke/neodev.nvim", opts = {} },
     },
     config = lsp_config,
   },
