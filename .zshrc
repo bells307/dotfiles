@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH="/opt/homebrew/opt/llvm/bin:/Users/bells307/go/bin:/Users/bells307/.tmuxifier/bin:/Users/bells307/.cargo/bin:/opt/homebrew/bin:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm/bin:$HOME/go/bin:$HOME/.cargo/bin:/opt/homebrew/bin:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.local/bin:$PATH"
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -122,5 +122,4 @@ alias dotfiles="git --git-dir=$HOME/dotfiles --work-tree=$HOME"
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(tmuxifier init -)"
 

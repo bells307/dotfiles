@@ -155,7 +155,7 @@ return {
 
       dap.adapters.lldb = {
         type = "executable",
-        command = "lldb-vscode",
+        command = "codelldb",
         name = "lldb",
       }
 
