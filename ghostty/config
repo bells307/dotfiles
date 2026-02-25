@@ -6,3 +6,6 @@ font-family = "Fira Code"
 font-family = "Hack Nerd Font Mono"
 
 mouse-scroll-multiplier = 1.0
+
+# Let tmux/neovim control cursor shape instead of shell integration
+# shell-integration-features = no-cursor
