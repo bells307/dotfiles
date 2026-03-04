@@ -1,61 +1,69 @@
--- :h lsp-config
+-- Global capabilities extended with nvim-cmp LSP source
+vim.lsp.config("*", {
+	capabilities = (function()
+		local caps = vim.lsp.protocol.make_client_capabilities()
+		local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+		if ok then
+			caps = vim.tbl_deep_extend("force", caps, cmp_lsp.default_capabilities())
+		end
+		return caps
+	end)(),
+})
 
+-- Keymaps and inlay hints applied on every LSP attach
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspAttach", { clear = true }),
-	callback = function(event)
-		vim.diagnostic.config({
-			virtual_text = true,
-			underline = true,
-			float = {
-				border = "single", -- "single", "double", "shadow", "none"
-			},
-		})
-
+	callback = function(ev)
+		local bufnr = ev.buf
 		local map = function(keys, func, desc)
-			vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
+			vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
 		end
 
 		local builtin = require("telescope.builtin")
 
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = event.buf, desc = "Go to declaration" })
-		vim.keymap.set("n", "<leader>fd", function()
+		map("gd", vim.lsp.buf.definition, "Go to definition")
+		map("gD", vim.lsp.buf.declaration, "Go to declaration")
+		map("<leader>fd", function()
 			builtin.diagnostics({ bufnr = 0 })
-		end, { buffer = event.buf, desc = "Diagnostics (buffer)" })
-		vim.keymap.set("n", "<leader>fD", builtin.diagnostics, { buffer = event.buf, desc = "Diagnostics (workspace)" })
-		vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = event.buf, desc = "Go to references" })
-		vim.keymap.set("n", "gI", builtin.lsp_implementations, { buffer = event.buf, desc = "Go to implentations" })
-		vim.keymap.set("n", "gy", builtin.lsp_type_definitions, { buffer = event.buf, desc = "Type definition" })
-		vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, { buffer = event.buf, desc = "Document symbols" })
-		vim.keymap.set(
-			"n",
-			"<leader>fS",
-			builtin.lsp_dynamic_workspace_symbols,
-			{ buffer = event.buf, desc = "Workspace symbols" }
-		)
-		vim.keymap.set("n", "<leader>fc", builtin.lsp_incoming_calls, { buffer = event.buf, desc = "Incoming calls" })
-		vim.keymap.set("n", "<leader>fC", builtin.lsp_outgoing_calls, { buffer = event.buf, desc = "Outgoing calls" })
+		end, "Diagnostics (buffer)")
+		map("<leader>fD", builtin.diagnostics, "Diagnostics (workspace)")
+		map("gr", builtin.lsp_references, "Go to references")
+		map("gI", builtin.lsp_implementations, "Go to implentations")
+		map("gy", builtin.lsp_type_definitions, "Type definition")
+		map("<leader>fs", builtin.lsp_document_symbols, "Document symbols")
+		map("<leader>fS", builtin.lsp_dynamic_workspace_symbols, "Workspace symbols")
+		map("<leader>fc", builtin.lsp_incoming_calls, "Incoming calls")
+		map("<leader>fC", builtin.lsp_outgoing_calls, "Outgoing calls")
+		map("<leader>cr", vim.lsp.buf.rename, "Rename")
+		map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+		map("<leader>cl", vim.lsp.codelens.refresh, "CodeLens Refresh")
+		map("<leader>cR", vim.lsp.codelens.run, "CodeLens Run")
+		map("K", vim.lsp.buf.hover, "Hover Documentation")
 
-		vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
-		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = event.buf, desc = "Code action" })
-		vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.refresh, { buffer = event.buf, desc = "CodeLens Refresh" })
-		vim.keymap.set("n", "<leader>cR", vim.lsp.codelens.run, { buffer = event.buf, desc = "CodeLens Run" })
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = event.buf, desc = "Hover Documentation" })
-
-		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-			vim.lsp.inlay_hint.enable(true)
+		if vim.lsp.inlay_hint then
 			map("<leader>th", function()
-				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-			end, "Toggle Inlay Hints")
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+			end, "Toggle inlay hints")
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		end
 	end,
 })
 
-vim.lsp.enable('rust_analyzer')
-vim.lsp.enable('gopls')
-vim.lsp.enable('lua_ls')
-vim.lsp.enable('taplo')
-vim.lsp.enable('pyright')
-vim.lsp.enable('jsonls')
-vim.lsp.enable('nil_ls')
+-- Diagnostics appearance
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "●",
+		source = "if_many",
+	},
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
+		border = "rounded",
+		source = true,
+	},
+})
+
+-- Enable servers (reads config from lsp/<name>.lua in runtimepath)
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("lua_ls")

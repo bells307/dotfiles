@@ -1,42 +1,59 @@
---[[ :h 'statusline'
-This is default statusline value:
+local modes = {
+	n = "NORMAL",
+	no = "N-OP",
+	nov = "N-OP",
+	noV = "N-OP",
+	niI = "NORMAL",
+	niR = "NORMAL",
+	niV = "NORMAL",
+	i = "INSERT",
+	ic = "INSERT",
+	ix = "INSERT",
+	v = "VISUAL",
+	V = "V-LINE",
+	["\22"] = "V-BLOCK",
+	s = "SELECT",
+	S = "S-LINE",
+	["\19"] = "S-BLOCK",
+	R = "REPLACE",
+	Rc = "REPLACE",
+	Rv = "V-REPLACE",
+	Rx = "REPLACE",
+	c = "COMMAND",
+	cv = "COMMAND",
+	r = "PROMPT",
+	rm = "MORE",
+	["r?"] = "CONFIRM",
+	["!"] = "SHELL",
+	t = "TERMINAL",
+}
 
-```lua
-vim.o.statusline = "%f %h%w%m%r%=%-14.(%l,%c%V%) %P"
-```
-
-below is simple example of custom statusline using neovim APIs
-
-See `:h 'statusline'` for more information about statusline.
-]]
-
----Show attached LSP clients in `[name1, name2]` format.
----Long server names will be modified. For example, `lua-language-server` will be shorten to `lua-ls`
----Returns an empty string if there aren't any attached LSP clients.
----@return string
-local function lsp_status()
-    local attached_clients = vim.lsp.get_clients({ bufnr = 0 })
-    if #attached_clients == 0 then
-        return ""
-    end
-    local names = vim.iter(attached_clients)
-        :map(function(client)
-            local name = client.name:gsub("language.server", "ls")
-            return name
-        end)
-        :totable()
-    return "[" .. table.concat(names, ", ") .. "]"
+_G.SLMode = function()
+	return modes[vim.api.nvim_get_mode().mode] or "?"
 end
 
-function _G.statusline()
-    return table.concat({
-        "%f",
-        "%h%w%m%r",
-        "%=",
-        lsp_status(),
-        " %-14(%l,%c%V%)",
-        "%P",
-    }, " ")
+local _layout_cache = ""
+if vim.fn.executable("im-select") == 1 then
+	local function update_layout()
+		local out = vim.fn.system("im-select"):gsub("%s+$", "")
+		if out:match("Russian") then
+			_layout_cache = "RU"
+		elseif out:match("ABC") or out:match("US") then
+			_layout_cache = "EN"
+		else
+			local short = out:match("([^.]+)$") or out
+			_layout_cache = short:sub(1, 4):upper()
+		end
+	end
+	update_layout()
+	vim.uv.new_timer():start(0, 1000, vim.schedule_wrap(update_layout))
 end
 
-vim.o.statusline = "%{%v:lua._G.statusline()%}"
+_G.SLLayout = function()
+	if _layout_cache == "" then
+		return ""
+	end
+	return _layout_cache .. " │ "
+end
+
+vim.opt.statusline = "%{v:lua.SLMode()} │ %{v:lua.SLLayout()}%f %m%r%=%l:%c  %p%%"

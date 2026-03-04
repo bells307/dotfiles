@@ -1,74 +1,75 @@
--- general options
-vim.o.completeopt = "menu,menuone,popup,fuzzy" -- modern completion menu
+-- Make Mason-installed binaries available globally
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
 
-vim.o.foldenable = true                        -- enable fold
-vim.o.foldlevel = 99                           -- start editing with all folds opened
-vim.o.foldmethod = "expr"                      -- use tree-sitter for folding method
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+local opt = vim.opt
 
-vim.o.clipboard = "unnamed"
+-- Line numbers
+opt.number = true
+opt.relativenumber = true
 
--- NOTE: Setting vim options can be opinionated. While options above are crucial to make this whole config work as expected,
--- below are just list of options I think most users will satisfy.
--- Feel free to modify as your preference.
+-- Cursor
+opt.cursorline = true
+opt.scrolloff = 8
+opt.sidescrolloff = 8
 
-vim.o.termguicolors = true  -- enable rgb colors
+-- Indentation
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.expandtab = true
+opt.smartindent = true
+opt.autoindent = true
 
-vim.o.cursorline = true     -- enable cursor line
+-- Search
+opt.hlsearch = true
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
 
-vim.o.number = true         -- enable line number
-vim.o.relativenumber = true -- and relative line number
+-- Splits
+opt.splitright = true
+opt.splitbelow = true
 
-vim.o.signcolumn = "yes"    -- always show sign column
+-- Appearance
+opt.termguicolors = true
+opt.signcolumn = "yes"
+opt.showmode = false
+opt.wrap = false
 
-vim.o.scrolloff = 8         -- keep 8 lines above/below cursor when scrolling
+opt.conceallevel = 0
+opt.pumheight = 10
+opt.cmdheight = 1
 
-vim.o.pumheight = 10        -- max height of completion menu
+-- Whitespace visualization
+opt.list = true
+opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-vim.o.list = true           -- use special characters to represent things like tabs or trailing spaces
-vim.opt.listchars = {       -- NOTE: using `vim.opt` instead of `vim.o` to pass rich object
-	tab = "▏ ",
-	trail = "·",
-	extends = "»",
-	precedes = "«",
-}
+-- Files
+opt.fileencoding = "utf-8"
+opt.swapfile = false
+opt.backup = false
+opt.undofile = true
+opt.undolevels = 10000
 
-vim.opt.diffopt:append("linematch:60") -- second stage diff to align lines
+-- Performance
+opt.updatetime = 250
+opt.timeoutlen = 300
 
-vim.o.confirm = true                   -- show dialog for unsaved file(s) before quit
-vim.o.updatetime = 200                 -- save swap file with 200ms debouncing
+-- Completion
+opt.completeopt = { "menuone", "noselect" }
 
-vim.o.ignorecase = true                -- case-insensitive search
-vim.o.smartcase = true                 -- , until search pattern contains upper case characters
+-- Clipboard
+opt.clipboard = "unnamedplus"
 
-vim.o.smartindent = true               -- auto-indenting when starting a new line
-vim.o.shiftround = true                -- round indent to multiple of 'shiftwidth'
-vim.o.shiftwidth = 4                   -- 0 to follow the 'tabstop' value
-vim.o.tabstop = 4                      -- tab width
+-- Mouse
+opt.mouse = "a"
 
-vim.o.undofile = true                  -- enable persistent undo
-vim.o.undolevels = 10000               -- 10x more undo levels
+-- Folds (using treesitter when available)
+opt.foldmethod = "indent"
+opt.foldlevel = 99
 
--- remove netrw banner for cleaner looking
-vim.g.netrw_banner = 0
-
-vim.o.background = "dark"
-
--- auto-reload files when changed outside of vim
-vim.o.autoread = true
-
--- trigger autoread when changing buffers or coming back to vim
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-	pattern = "*",
-	command = "checktime",
-})
-
--- autosave configuration
-vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
-	pattern = "*",
-	callback = function()
-		if vim.bo.modifiable and vim.bo.modified and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-			vim.cmd("silent! write")
-		end
-	end,
-})
+-- Netrw
+vim.g.netrw_banner = 0        -- hide banner
+vim.g.netrw_liststyle = 3     -- tree view by default
+vim.g.netrw_winsize = 25      -- width when split (%)
+vim.g.netrw_browse_split = 4  -- open files in previous window
