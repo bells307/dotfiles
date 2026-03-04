@@ -18,7 +18,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", { noremap = true, silent = t
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
 
 -- Buffer navigation
-vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { noremap = true, silent = true, desc = "Previous buffer" })
-vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<cr>", { noremap = true, silent = true, desc = "Previous buffer" })
 vim.keymap.set("n", "<leader><leader>", "<cmd>e #<cr>", { noremap = true, silent = true, desc = "Switch to alternate buffer" })
 

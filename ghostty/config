@@ -1,9 +1,9 @@
 config-file = ~/.config/ghostty/current-theme.conf
 
-font-family = "JetBrainsMono Nerd Font Mono"
-font-family = "MesloLGS Nerd Font Mono"
-font-family = "Fira Code"
+font-family = "Lilex Nerd Font Mono"
 font-family = "Hack Nerd Font Mono"
+font-family = "JetBrainsMono Nerd Font Mono"
+font-family = "Fira Code"
 
 mouse-scroll-multiplier = 1.0
 
