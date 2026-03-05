@@ -1,11 +1,4 @@
-return {
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufReadPost", "BufNewFile" },
-		main = "ibl",
-		opts = {
-			indent = { char = "" },
-			scope = { enabled = true },
-		},
-	},
-}
+require("ibl").setup({
+	indent = { char = "│" },
+	scope = { enabled = true },
+})

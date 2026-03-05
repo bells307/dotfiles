@@ -1,107 +1,30 @@
-return {
-	"nvim-telescope/telescope.nvim",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		"nvim-telescope/telescope-ui-select.nvim",
-	},
-	cmd = "Telescope",
-	keys = {
-		{
-			"<leader>ff",
-			function()
-				require("telescope.builtin").find_files()
-			end,
-			desc = "Files (respecting .gitignore)",
-		},
-		{
-			"<leader>fF",
-			function()
-				require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
-			end,
-			desc = "Files (all, including .gitignore)",
-		},
-		{
-			"<leader>f.",
-			function()
-				require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
-			end,
-			desc = "Files (current buffer directory)",
-		},
-		{
-			"<leader>fk",
-			function()
-				require("telescope.builtin").keymaps()
-			end,
-			desc = "Keymaps",
-		},
-		{
-			"<leader>fg",
-			function()
-				require("telescope.builtin").live_grep()
-			end,
-			desc = "Grep",
-		},
-		{
-			"<leader>fh",
-			function()
-				require("telescope.builtin").help_tags()
-			end,
-			desc = "Help tags",
-		},
-		{
-			"<leader>fo",
-			function()
-				require("telescope.builtin").oldfiles()
-			end,
-			desc = "Old files",
-		},
-		{
-			"<leader>fj",
-			function()
-				require("telescope.builtin").jumplist()
-			end,
-			desc = "Jumps",
-		},
-		{
-			"<leader>fb",
-			function()
-				require("telescope.builtin").buffers()
-			end,
-			desc = "Buffers",
-		},
-		{
-			"<leader>fG",
-			function()
-				require("telescope.builtin").git_status()
-			end,
-			desc = "Git status",
-		},
-		{
-			"<leader>fr",
-			function()
-				require("telescope.builtin").resume()
-			end,
-			desc = "Resume last search",
-		},
-		{
-			"<leader>ft",
-			function()
-				require("telescope.builtin").colorscheme({ enable_preview = true })
-			end,
-			desc = "Colorscheme picker",
+local telescope = require("telescope")
+telescope.setup({
+	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown(),
 		},
 	},
-	config = function()
-		local telescope = require("telescope")
-		telescope.setup({
-			extensions = {
-				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
-				},
-			},
-		})
-		telescope.load_extension("fzf")
-		telescope.load_extension("ui-select")
-	end,
-}
+})
+telescope.load_extension("fzf")
+telescope.load_extension("ui-select")
+
+local b = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", b.find_files, { desc = "Files (respecting .gitignore)" })
+vim.keymap.set("n", "<leader>fF", function()
+	b.find_files({ hidden = true, no_ignore = true })
+end, { desc = "Files (all, including .gitignore)" })
+vim.keymap.set("n", "<leader>f.", function()
+	b.find_files({ cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Files (current buffer directory)" })
+vim.keymap.set("n", "<leader>fk", b.keymaps, { desc = "Keymaps" })
+vim.keymap.set("n", "<leader>fg", b.live_grep, { desc = "Grep" })
+vim.keymap.set("n", "<leader>fh", b.help_tags, { desc = "Help tags" })
+vim.keymap.set("n", "<leader>fo", b.oldfiles, { desc = "Old files" })
+vim.keymap.set("n", "<leader>fj", b.jumplist, { desc = "Jumps" })
+vim.keymap.set("n", "<leader>fb", b.buffers, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fG", b.git_status, { desc = "Git status" })
+vim.keymap.set("n", "<leader>fr", b.resume, { desc = "Resume last search" })
+vim.keymap.set("n", "<leader>ft", function()
+	b.colorscheme({ enable_preview = true })
+end, { desc = "Colorscheme picker" })
