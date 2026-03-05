@@ -25,18 +25,14 @@ clone_or_pull() {
 # Core
 clone_or_pull "nvim-lua/plenary.nvim"                           "plenary.nvim"
 
-# Completion
-clone_or_pull "hrsh7th/nvim-cmp"                               "nvim-cmp"
-clone_or_pull "hrsh7th/cmp-nvim-lsp"                           "cmp-nvim-lsp"
-clone_or_pull "hrsh7th/cmp-buffer"                             "cmp-buffer"
-clone_or_pull "hrsh7th/cmp-path"                               "cmp-path"
-clone_or_pull "hrsh7th/cmp-cmdline"                            "cmp-cmdline"
-clone_or_pull "L3MON4D3/LuaSnip"                               "LuaSnip"
-clone_or_pull "saadparwaiz1/cmp_luasnip"                       "cmp_luasnip"
 
 # Colorschemes
 clone_or_pull "rebelot/kanagawa.nvim"                          "kanagawa.nvim"
 clone_or_pull "folke/tokyonight.nvim"                          "tokyonight.nvim"
+clone_or_pull "catppuccin/nvim"                                "catppuccin"
+clone_or_pull "Mofiqul/vscode.nvim"                            "vscode.nvim"
+clone_or_pull "projekt0n/github-nvim-theme"                    "github-nvim-theme"
+clone_or_pull "sainnhe/everforest"                             "everforest"
 
 # Editing
 clone_or_pull "windwp/nvim-autopairs"                          "nvim-autopairs"

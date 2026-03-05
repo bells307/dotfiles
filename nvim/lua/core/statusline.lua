@@ -35,15 +35,22 @@ end
 local _layout_cache = ""
 if vim.fn.executable("im-select") == 1 then
 	local function update_layout()
-		local out = vim.fn.system("im-select"):gsub("%s+$", "")
-		if out:match("Russian") then
-			_layout_cache = "RU"
-		elseif out:match("ABC") or out:match("US") then
-			_layout_cache = "EN"
-		else
-			local short = out:match("([^.]+)$") or out
-			_layout_cache = short:sub(1, 4):upper()
-		end
+		vim.system({ "im-select" }, { text = true }, function(obj)
+			if obj.code ~= 0 then
+				return
+			end
+			local out = (obj.stdout or ""):gsub("%s+$", "")
+			vim.schedule(function()
+				if out:match("Russian") then
+					_layout_cache = "RU"
+				elseif out:match("ABC") or out:match("US") then
+					_layout_cache = "EN"
+				else
+					local short = out:match("([^.]+)$") or out
+					_layout_cache = short:sub(1, 4):upper()
+				end
+			end)
+		end)
 	end
 	update_layout()
 	vim.uv.new_timer():start(0, 1000, vim.schedule_wrap(update_layout))
@@ -64,4 +71,4 @@ _G.SLGitBranch = function()
 	return " " .. branch .. " "
 end
 
-vim.opt.statusline = "%{v:lua.SLMode()} %{v:lua.SLLayout()}%y %f %m%r%=%l:%c  %p%%"
+vim.opt.statusline = "%{v:lua.SLMode()} %{v:lua.SLLayout()}%{v:lua.SLGitBranch()}%y %f %m%r%=%l:%c  %p%%"

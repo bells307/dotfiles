@@ -1,13 +1,5 @@
--- Global capabilities extended with nvim-cmp LSP source
 vim.lsp.config("*", {
-	capabilities = (function()
-		local caps = vim.lsp.protocol.make_client_capabilities()
-		local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-		if ok then
-			caps = vim.tbl_deep_extend("force", caps, cmp_lsp.default_capabilities())
-		end
-		return caps
-	end)(),
+	capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
 -- Keymaps and inlay hints applied on every LSP attach
