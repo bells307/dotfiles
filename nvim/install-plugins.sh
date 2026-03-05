@@ -22,41 +22,23 @@ clone_or_pull() {
 	fi
 }
 
-# Core
-clone_or_pull "nvim-lua/plenary.nvim"                           "plenary.nvim"
-
-
-# Colorschemes
+clone_or_pull "nvim-lua/plenary.nvim"                          "plenary.nvim"
 clone_or_pull "rebelot/kanagawa.nvim"                          "kanagawa.nvim"
 clone_or_pull "folke/tokyonight.nvim"                          "tokyonight.nvim"
 clone_or_pull "catppuccin/nvim"                                "catppuccin"
 clone_or_pull "Mofiqul/vscode.nvim"                            "vscode.nvim"
 clone_or_pull "projekt0n/github-nvim-theme"                    "github-nvim-theme"
 clone_or_pull "sainnhe/everforest"                             "everforest"
-
-# Editing
 clone_or_pull "windwp/nvim-autopairs"                          "nvim-autopairs"
 clone_or_pull "stevearc/conform.nvim"                          "conform.nvim"
 clone_or_pull "saecki/crates.nvim"                             "crates.nvim"
 clone_or_pull "folke/flash.nvim"                               "flash.nvim"
-
-# Git
 clone_or_pull "lewis6991/gitsigns.nvim"                        "gitsigns.nvim"
-
-# UI
-clone_or_pull "lukas-reineke/indent-blankline.nvim"            "indent-blankline.nvim"
-
-# LSP
 clone_or_pull "williamboman/mason.nvim"                        "mason.nvim"
-
-# File navigation
 clone_or_pull "stevearc/oil.nvim"                              "oil.nvim"
-
-# Telescope
 clone_or_pull "nvim-telescope/telescope.nvim"                  "telescope.nvim"
 clone_or_pull "nvim-telescope/telescope-ui-select.nvim"        "telescope-ui-select.nvim"
 
-# telescope-fzf-native needs a build step
 if [ -d "$PACK_DIR/telescope-fzf-native.nvim" ]; then
 	echo "Updating telescope-fzf-native.nvim..."
 	git -C "$PACK_DIR/telescope-fzf-native.nvim" pull --ff-only
@@ -68,7 +50,6 @@ else
 	make -C "$PACK_DIR/telescope-fzf-native.nvim"
 fi
 
-# Treesitter
 clone_or_pull "nvim-treesitter/nvim-treesitter"                "nvim-treesitter"          "main"
 clone_or_pull "nvim-treesitter/nvim-treesitter-textobjects"    "nvim-treesitter-textobjects" "main"
 
