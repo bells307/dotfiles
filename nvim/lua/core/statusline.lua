@@ -53,7 +53,15 @@ _G.SLLayout = function()
 	if _layout_cache == "" then
 		return ""
 	end
-	return _layout_cache .. " │ "
+	return _layout_cache .. " "
 end
 
-vim.opt.statusline = "%{v:lua.SLMode()} │ %{v:lua.SLLayout()}%f %m%r%=%l:%c  %p%%"
+_G.SLGitBranch = function()
+	local branch = vim.b.gitsigns_head
+	if not branch or branch == "" then
+		return ""
+	end
+	return " " .. branch .. " "
+end
+
+vim.opt.statusline = "%{v:lua.SLMode()} %{v:lua.SLLayout()}%y %f %m%r%=%l:%c  %p%%"

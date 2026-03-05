@@ -84,6 +84,13 @@ return {
 			end,
 			desc = "Resume last search",
 		},
+		{
+			"<leader>ft",
+			function()
+				require("telescope.builtin").colorscheme({ enable_preview = true })
+			end,
+			desc = "Colorscheme picker",
+		},
 	},
 	config = function()
 		local telescope = require("telescope")

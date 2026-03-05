@@ -4,7 +4,7 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		main = "ibl",
 		opts = {
-			indent = { char = "│" },
+			indent = { char = "" },
 			scope = { enabled = true },
 		},
 	},

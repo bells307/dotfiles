@@ -59,3 +59,7 @@ map("n", "]d", vim.diagnostic.goto_next)
 map("n", "<leader>tw", function()
 	vim.wo.wrap = not vim.wo.wrap
 end, { desc = "Toggle word wrap" })
+
+map("n", "<leader>tb", function()
+	vim.o.background = vim.o.background == "dark" and "light" or "dark"
+end, { desc = "Toggle background light/dark" })
