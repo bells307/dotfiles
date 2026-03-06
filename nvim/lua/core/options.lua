@@ -41,7 +41,7 @@ opt.pumheight = 10
 opt.cmdheight = 1
 
 -- Whitespace visualization
-opt.list = true
+opt.list = false
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Files
@@ -56,7 +56,7 @@ opt.updatetime = 250
 opt.timeoutlen = 300
 
 -- Completion
-opt.completeopt = { "menuone", "noselect" }
+opt.completeopt = "menuone,noselect,popup"
 
 -- Clipboard
 opt.clipboard = "unnamedplus"
@@ -69,7 +69,7 @@ opt.foldmethod = "indent"
 opt.foldlevel = 99
 
 -- Netrw
-vim.g.netrw_banner = 0        -- hide banner
-vim.g.netrw_liststyle = 3     -- tree view by default
-vim.g.netrw_winsize = 25      -- width when split (%)
-vim.g.netrw_browse_split = 4  -- open files in previous window
+vim.g.netrw_banner = 0 -- hide banner
+vim.g.netrw_liststyle = 3 -- tree view by default
+vim.g.netrw_winsize = 25 -- width when split (%)
+vim.g.netrw_browse_split = 4 -- open files in previous window

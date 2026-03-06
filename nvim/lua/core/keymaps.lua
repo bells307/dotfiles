@@ -40,6 +40,11 @@ map("v", "p", '"_dP')
 -- Delete without overwriting register
 map({ "n", "v" }, "<leader>d", '"_d')
 
+-- Copy relative filepath to clipboard
+map("n", "<leader>y", function()
+	vim.fn.setreg("+", vim.fn.expand("%"))
+end, { desc = "Copy relative filepath" })
+
 -- Save
 map("n", "<leader>w", "<cmd>w<CR>")
 
@@ -63,3 +68,7 @@ end, { desc = "Toggle word wrap" })
 map("n", "<leader>tb", function()
 	vim.o.background = vim.o.background == "dark" and "light" or "dark"
 end, { desc = "Toggle background light/dark" })
+
+map("n", "<leader>ts", function()
+	vim.opt.list = not vim.opt.list:get()
+end, { desc = "Toggle whitespace visualization" })
