@@ -1,0 +1,143 @@
+" ============================================================
+" Minimal vimrc — no plugins, safe to copy to remote servers
+" ============================================================
+
+" --- Basics ---
+set nocompatible          " disable Vi compatibility mode
+set encoding=utf-8
+set history=500
+set undolevels=500
+
+" --- UI ---
+set number                " line numbers
+set relativenumber        " relative line numbers (great for jumps)
+set cursorline            " highlight current line
+set showmatch             " highlight matching brackets
+set wildmenu              " enhanced command-line completion
+set laststatus=2          " always show status line
+set showcmd               " show partial command in bottom right
+set scrolloff=5           " keep 5 lines visible around cursor
+set sidescrolloff=5
+
+" --- Status line (no plugin needed) ---
+set statusline=%f\ %m%r%h%w\ [%Y]\ [%{&ff}]\ %=%l/%L\ col:%c\ (%p%%)
+
+" --- Search ---
+set incsearch             " search as you type
+set hlsearch              " highlight search results
+set ignorecase            " case-insensitive search...
+set smartcase             " ...unless query has uppercase
+
+" --- Indentation ---
+set autoindent
+set smartindent
+set expandtab             " spaces instead of tabs
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+" --- Editing ---
+set backspace=indent,eol,start   " sane backspace behavior
+set nojoinspaces                  " one space after . when joining lines
+set nowrap
+set formatoptions-=t              " don't auto-wrap text
+
+" --- Files ---
+set autoread              " reload file if changed outside vim
+set noswapfile
+set nobackup
+set nowritebackup
+
+" --- Splits ---
+set splitright            " new vertical split goes right
+set splitbelow            " new horizontal split goes below
+
+" --- Mouse (works in most terminals) ---
+set mouse=a
+
+" --- Clipboard (works if vim has +clipboard) ---
+set clipboard=unnamed
+
+" --- Misc ---
+set hidden                " allow switching buffers without saving
+set ttyfast
+set lazyredraw
+
+" ============================================================
+" Key mappings
+" ============================================================
+
+let mapleader = " "
+
+" Clear search highlight
+nnoremap <Leader><Space> :nohlsearch<CR>
+
+" Better window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Move lines up/down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Keep visual selection after indent
+vnoremap < <gv
+vnoremap > >gv
+
+" Yank to end of line (consistent with D and C)
+nnoremap Y y$
+
+" Center screen after jumping
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Quick save / quit
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+
+" Buffer navigation
+nnoremap <Leader>n :bnext<CR>
+nnoremap <Leader>p :bprev<CR>
+nnoremap <Leader>d :bd<CR>
+
+" Open netrw file explorer
+nnoremap <Leader>e :Explore<CR>
+
+" ============================================================
+" Colors and appearance
+" ============================================================
+
+syntax enable
+set background=dark
+
+" Options: default, desert, slate, elflord, industry, torte
+colorscheme default
+
+" Make line numbers less distracting
+highlight LineNr       ctermfg=238
+highlight CursorLineNr ctermfg=yellow cterm=bold
+highlight CursorLine   cterm=none ctermbg=235
+
+" ============================================================
+" Filetype-specific settings
+" ============================================================
+
+filetype plugin indent on
+
+augroup filetype_overrides
+    autocmd!
+    " 2-space indent for common web/config files
+    autocmd FileType yaml,json,html,css,javascript,typescript
+        \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    " Wrap and spell for markdown/text
+    autocmd FileType markdown,text
+        \ setlocal wrap linebreak spell spelllang=en_us
+    " Trim trailing whitespace on save
+    autocmd BufWritePre * :%s/\s\+$//e
+augroup END
