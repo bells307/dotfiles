@@ -32,43 +32,47 @@ _G.SLMode = function()
 	return modes[vim.api.nvim_get_mode().mode] or "?"
 end
 
-local _layout_cache = ""
-if vim.fn.executable("im-select") == 1 then
-	local function update_layout()
-		vim.system({ "im-select" }, { text = true }, function(obj)
-			if obj.code ~= 0 then
-				return
-			end
-			local out = (obj.stdout or ""):gsub("%s+$", "")
-			vim.schedule(function()
-				if out:match("Russian") then
-					_layout_cache = "RU"
-				elseif out:match("ABC") or out:match("US") then
-					_layout_cache = "EN"
-				else
-					local short = out:match("([^.]+)$") or out
-					_layout_cache = short:sub(1, 4):upper()
-				end
-			end)
-		end)
+_G.SLDiag = function()
+	local e = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+	local w = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+	local parts = {}
+	if e > 0 then
+		parts[#parts + 1] = "E:" .. e
 	end
-	update_layout()
-	vim.uv.new_timer():start(0, 1000, vim.schedule_wrap(update_layout))
-end
-
-_G.SLLayout = function()
-	if _layout_cache == "" then
+	if w > 0 then
+		parts[#parts + 1] = "W:" .. w
+	end
+	if #parts == 0 then
 		return ""
 	end
-	return _layout_cache .. " "
+	return table.concat(parts, " ") .. " "
 end
 
-_G.SLGitBranch = function()
-	local branch = vim.b.gitsigns_head
-	if not branch or branch == "" then
+_G.SLGit = function()
+	local d = vim.b.gitsigns_status_dict
+	if not d then
 		return ""
 	end
-	return " " .. branch .. " "
+	local parts = { " " .. d.head }
+	if (d.added or 0) > 0 then
+		parts[#parts + 1] = "+" .. d.added
+	end
+	if (d.changed or 0) > 0 then
+		parts[#parts + 1] = "~" .. d.changed
+	end
+	if (d.removed or 0) > 0 then
+		parts[#parts + 1] = "-" .. d.removed
+	end
+	return table.concat(parts, " ") .. " "
 end
 
-vim.opt.statusline = "%{v:lua.SLMode()} %{v:lua.SLLayout()}%{v:lua.SLGitBranch()}%y %f %m%r%=%l:%c  %p%%"
+_G.SLKBLayout = function()
+	if vim.api.nvim_get_option_value("keymap", {}) == "" then
+		return ""
+	end
+	local active = vim.api.nvim_get_option_value("iminsert", { buf = 0 }) ~= 0
+	return (active and "[ru]" or "[en]") .. " "
+end
+
+vim.opt.statusline =
+	"%{v:lua.SLMode()} | %f %m%r %{v:lua.SLDiag()}%=%{v:lua.SLGit()}%=%{&fileencoding} %{&fileformat} %{&filetype} %{v:lua.SLKBLayout()}%=%l:%c  %p%%"

@@ -65,3 +65,4 @@ vim.diagnostic.config({
 -- Enable servers (reads config from lsp/<name>.lua in runtimepath)
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("bash_ls")

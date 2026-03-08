@@ -1,6 +1,3 @@
--- Make Mason-installed binaries available globally
-vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
-
 local opt = vim.opt
 
 -- Line numbers
@@ -57,6 +54,7 @@ opt.timeoutlen = 300
 
 -- Completion
 opt.completeopt = "menuone,noselect,popup"
+opt.shortmess:append("c") -- suppress "Pattern not found" from auto-completion
 
 -- Clipboard
 opt.clipboard = "unnamedplus"
@@ -67,6 +65,13 @@ opt.mouse = "a"
 -- Folds (using treesitter when available)
 opt.foldmethod = "indent"
 opt.foldlevel = 99
+
+-- Keyboard layout
+opt.keymap = "russian-jcuken"
+opt.iminsert = 0
+opt.imsearch = 0
+opt.langmap =
+	"ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
 
 -- Netrw
 vim.g.netrw_banner = 0 -- hide banner

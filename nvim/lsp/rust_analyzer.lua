@@ -1,13 +1,13 @@
-local function on_attach(client, bufnr)
-	local function goto_location(location)
-		local uri = location.uri or location.targetUri
-		local range = location.range or location.targetSelectionRange
-		vim.cmd("edit " .. vim.fn.fnameescape(vim.uri_to_fname(uri)))
-		if range then
-			vim.api.nvim_win_set_cursor(0, { range.start.line + 1, range.start.character })
-		end
+local function goto_location(location)
+	local uri = location.uri or location.targetUri
+	local range = location.range or location.targetSelectionRange
+	vim.cmd("edit " .. vim.fn.fnameescape(vim.uri_to_fname(uri)))
+	if range then
+		vim.api.nvim_win_set_cursor(0, { range.start.line + 1, range.start.character })
 	end
+end
 
+local function on_attach(client, bufnr)
 	-- Parent module
 	vim.keymap.set("n", "<leader>rp", function()
 		local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
