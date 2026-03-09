@@ -9,4 +9,3 @@
 - rust-analyzer
 - rustfmt
 - cargo
-- codelldb

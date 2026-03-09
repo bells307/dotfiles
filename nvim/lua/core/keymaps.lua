@@ -37,6 +37,9 @@ map("n", "N", "Nzzzv")
 -- Paste without overwriting register
 map("v", "p", '"_dP')
 
+-- Delete without overwriting register
+map({ "n", "v" }, "<leader>d", '"_d')
+
 -- Copy relative filepath to clipboard
 map("n", "<leader>y", function()
 	vim.fn.setreg("+", vim.fn.expand("%"))
@@ -69,4 +72,3 @@ end, { desc = "Toggle background light/dark" })
 map("n", "<leader>ts", function()
 	vim.opt.list = not vim.opt.list:get()
 end, { desc = "Toggle whitespace visualization" })
-
