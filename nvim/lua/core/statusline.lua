@@ -66,6 +66,18 @@ _G.SLGit = function()
 	return table.concat(parts, " ") .. " "
 end
 
+_G.SLLSP = function()
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	if #clients == 0 then
+		return ""
+	end
+	local names = {}
+	for _, c in ipairs(clients) do
+		names[#names + 1] = c.name
+	end
+	return table.concat(names, ",") .. " "
+end
+
 _G.SLKBLayout = function()
 	if vim.api.nvim_get_option_value("keymap", {}) == "" then
 		return ""
@@ -75,4 +87,4 @@ _G.SLKBLayout = function()
 end
 
 vim.opt.statusline =
-	"%{v:lua.SLMode()} | %f %m%r %{v:lua.SLDiag()}%=%{v:lua.SLGit()}%=%{&fileencoding} %{&fileformat} %{&filetype} %{v:lua.SLKBLayout()}%=%l:%c  %p%%"
+	"%{v:lua.SLMode()} | %f %m%r%=%{v:lua.SLLSP()}%{v:lua.SLDiag()}%=%{v:lua.SLGit()}%=%{&fileencoding} %{&fileformat} %{&filetype} %{v:lua.SLKBLayout()}%=%l:%c  %p%%"
