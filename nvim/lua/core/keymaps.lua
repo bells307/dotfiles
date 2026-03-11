@@ -3,6 +3,10 @@ vim.g.maplocalleader = " "
 
 local map = vim.keymap.set
 
+-- Exit insert mode
+map("i", "jj", "<Esc>")
+map("i", "jk", "<Esc>")
+
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -72,3 +76,8 @@ end, { desc = "Toggle background light/dark" })
 map("n", "<leader>ts", function()
 	vim.opt.list = not vim.opt.list:get()
 end, { desc = "Toggle whitespace visualization" })
+
+-- Toggle Russian/English keyboard layout
+map({ "n", "i" }, "<M-Space>", function()
+	vim.opt.iminsert = vim.opt.iminsert:get() == 0 and 1 or 0
+end, { desc = "Toggle Russian/English layout" })

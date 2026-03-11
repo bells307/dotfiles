@@ -1,4 +1,4 @@
-config-file = ~/.config/ghostty/current-theme.conf
+theme = Kanagawa Wave
 
 font-family = "Lilex Nerd Font Mono"
 font-family = "Hack Nerd Font Mono"
@@ -8,6 +8,3 @@ font-family = "Fira Code"
 mouse-scroll-multiplier = 1.0
 
 cursor-style = block
-
-# Let tmux/neovim control cursor shape instead of shell integration
-# shell-integration-features = no-cursor
