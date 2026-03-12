@@ -1,3 +1,13 @@
+-- Enable treesitter for filetypes that have a parser installed
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+		if lang then
+			pcall(vim.treesitter.start, args.buf)
+		end
+	end,
+})
+
 -- Incremental treesitter selection
 local ts_sel_history = {}
 
@@ -20,7 +30,7 @@ local function ts_select_node(node)
 	vim.api.nvim_win_set_cursor(0, { er + 1, last_col })
 end
 
-vim.keymap.set("n", "<A-o>", function()
+vim.keymap.set("n", "<M-o>", function()
 	ts_sel_history = {}
 	local node = vim.treesitter.get_node()
 	if not node then
@@ -30,7 +40,7 @@ vim.keymap.set("n", "<A-o>", function()
 	ts_select_node(node)
 end)
 
-vim.keymap.set("x", "<A-o>", function()
+vim.keymap.set("x", "<M-o>", function()
 	local last = ts_sel_history[#ts_sel_history]
 	if not last then
 		return
@@ -43,7 +53,7 @@ vim.keymap.set("x", "<A-o>", function()
 	ts_select_node(parent)
 end)
 
-vim.keymap.set("x", "<A-i>", function()
+vim.keymap.set("x", "<M-i>", function()
 	if #ts_sel_history <= 1 then
 		return
 	end

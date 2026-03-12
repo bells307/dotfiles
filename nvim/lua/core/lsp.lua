@@ -1,65 +1,3 @@
-local function bisect_left(refs, line, col)
-	local l, r = 1, #refs + 1
-	while l < r do
-		local m = l + math.floor((r - l) / 2)
-		local rl, rc = refs[m].range.start.line, refs[m].range.start.character
-		if rl < line or (rl == line and rc <= col) then
-			l = m + 1
-		else
-			r = m
-		end
-	end
-	return l
-end
-
-local function goto_reference(direction)
-	local bufnr = vim.api.nvim_get_current_buf()
-	local win = vim.api.nvim_get_current_win()
-	local client = vim.lsp.get_clients({ bufnr = bufnr })[1]
-	local enc = client and client.offset_encoding or "utf-16"
-	local pos_params = vim.lsp.util.make_position_params(win, enc)
-	local params = {
-		textDocument = pos_params.textDocument,
-		position = pos_params.position,
-		context = { includeDeclaration = true },
-	}
-	vim.lsp.buf_request(bufnr, "textDocument/references", params, function(err, result)
-		if err or not result or #result == 0 then
-			return
-		end
-		local uri = vim.uri_from_bufnr(bufnr)
-		local refs = vim.tbl_filter(function(r)
-			return r.uri == uri
-		end, result)
-		if #refs == 0 then
-			return
-		end
-		table.sort(refs, function(a, b)
-			local al, bl = a.range.start.line, b.range.start.line
-			if al ~= bl then
-				return al < bl
-			end
-			return a.range.start.character < b.range.start.character
-		end)
-		local cur = vim.api.nvim_win_get_cursor(win)
-		local cur_line, cur_col = cur[1] - 1, cur[2]
-		local i = bisect_left(refs, cur_line, cur_col)
-		if direction == "next" then
-			if i > #refs then
-				i = 1
-			end
-		else
-			i = i - 1
-			if i == 0 then
-				i = #refs
-			end
-		end
-		local target = refs[i]
-		vim.cmd("normal! m`")
-		vim.api.nvim_win_set_cursor(win, { target.range.start.line + 1, target.range.start.character })
-	end)
-end
-
 vim.lsp.config("*", {
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
@@ -98,13 +36,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>cl", vim.lsp.codelens.refresh, "CodeLens Refresh")
 		map("n", "<leader>cR", vim.lsp.codelens.run, "CodeLens Run")
 		map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
-
-		map("n", "]]", function()
-			goto_reference("next")
-		end, "Next reference usage")
-		map("n", "[[", function()
-			goto_reference("prev")
-		end, "Prev reference usage")
 
 		if vim.lsp.inlay_hint then
 			map("n", "<leader>th", function()

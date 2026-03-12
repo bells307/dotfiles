@@ -22,7 +22,6 @@ clone_or_pull() {
     fi
 }
 
-clone_or_pull "nvim-lua/plenary.nvim" "plenary.nvim"
 clone_or_pull "rebelot/kanagawa.nvim" "kanagawa.nvim"
 clone_or_pull "folke/tokyonight.nvim" "tokyonight.nvim"
 clone_or_pull "catppuccin/nvim" "catppuccin"
@@ -32,7 +31,6 @@ clone_or_pull "sainnhe/everforest" "everforest"
 clone_or_pull "windwp/nvim-autopairs" "nvim-autopairs"
 clone_or_pull "stevearc/conform.nvim" "conform.nvim"
 clone_or_pull "saecki/crates.nvim" "crates.nvim"
-clone_or_pull "folke/flash.nvim" "flash.nvim"
 clone_or_pull "smoka7/hop.nvim" "hop.nvim"
 clone_or_pull "lewis6991/gitsigns.nvim" "gitsigns.nvim"
 clone_or_pull "stevearc/oil.nvim" "oil.nvim"
@@ -49,10 +47,6 @@ else
     echo "Building telescope-fzf-native.nvim..."
     make -C "$PACK_DIR/telescope-fzf-native.nvim"
 fi
-
-clone_or_pull "nvim-treesitter/nvim-treesitter" "nvim-treesitter" "main"
-clone_or_pull "nvim-treesitter/nvim-treesitter-textobjects" "nvim-treesitter-textobjects" "main"
-clone_or_pull "nvim-treesitter/nvim-treesitter-context" "nvim-treesitter-context"
 
 echo ""
 echo "Done. Open Neovim and run :TSUpdate to install parsers."

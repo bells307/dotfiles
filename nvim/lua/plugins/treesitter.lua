@@ -101,7 +101,7 @@ vim.keymap.set("n", "<leader>sA", function()
 	require("nvim-treesitter-textobjects.swap").swap_next("@parameter.outer")
 end)
 
-require("treesitter-context").setup()
+require("treesitter-context").setup({ enable = false })
 vim.keymap.set("n", "<leader>tc", function()
 	require("treesitter-context").toggle()
 end)
