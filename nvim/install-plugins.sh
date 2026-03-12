@@ -51,6 +51,7 @@ fi
 
 clone_or_pull "nvim-treesitter/nvim-treesitter" "nvim-treesitter" "main"
 clone_or_pull "nvim-treesitter/nvim-treesitter-textobjects" "nvim-treesitter-textobjects" "main"
+clone_or_pull "nvim-treesitter/nvim-treesitter-context" "nvim-treesitter-context"
 
 echo ""
 echo "Done. Open Neovim and run :TSUpdate to install parsers."
