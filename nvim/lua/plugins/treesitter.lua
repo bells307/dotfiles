@@ -19,8 +19,6 @@ require("nvim-treesitter").install({
 	"comment",
 })
 
-vim.g.no_plugin_maps = true
-
 require("nvim-treesitter-textobjects").setup({
 	select = {
 		lookahead = true,
@@ -46,6 +44,12 @@ vim.keymap.set({ "x", "o" }, "ac", function()
 end)
 vim.keymap.set({ "x", "o" }, "ic", function()
 	require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "aa", function()
+	require("nvim-treesitter-textobjects.select").select_textobject("@parameter.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ia", function()
+	require("nvim-treesitter-textobjects.select").select_textobject("@parameter.inner", "textobjects")
 end)
 vim.keymap.set({ "x", "o" }, "as", function()
 	require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
@@ -77,6 +81,19 @@ vim.keymap.set({ "n", "x", "o" }, "[C", function()
 	require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
 end)
 
+vim.keymap.set({ "n", "x", "o" }, "]a", function()
+	require("nvim-treesitter-textobjects.move").goto_next_start("@parameter.inner", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[a", function()
+	require("nvim-treesitter-textobjects.move").goto_previous_start("@parameter.inner", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]A", function()
+	require("nvim-treesitter-textobjects.move").goto_next_end("@parameter.inner", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[A", function()
+	require("nvim-treesitter-textobjects.move").goto_previous_end("@parameter.inner", "textobjects")
+end)
+
 vim.keymap.set("n", "<leader>sa", function()
 	require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
 end)
@@ -106,25 +123,33 @@ local function ts_select_node(node)
 	vim.api.nvim_win_set_cursor(0, { er + 1, last_col })
 end
 
-vim.keymap.set("n", "<Tab>", function()
+vim.keymap.set("n", "<CR>", function()
 	ts_sel_history = {}
 	local node = vim.treesitter.get_node()
-	if not node then return end
+	if not node then
+		return
+	end
 	table.insert(ts_sel_history, node)
 	ts_select_node(node)
 end)
 
-vim.keymap.set("x", "<Tab>", function()
+vim.keymap.set("x", "<CR>", function()
 	local last = ts_sel_history[#ts_sel_history]
-	if not last then return end
+	if not last then
+		return
+	end
 	local parent = last:parent()
-	if not parent then return end
+	if not parent then
+		return
+	end
 	table.insert(ts_sel_history, parent)
 	ts_select_node(parent)
 end)
 
-vim.keymap.set("x", "<S-Tab>", function()
-	if #ts_sel_history <= 1 then return end
+vim.keymap.set("x", "<BS>", function()
+	if #ts_sel_history <= 1 then
+		return
+	end
 	table.remove(ts_sel_history)
 	ts_select_node(ts_sel_history[#ts_sel_history])
 end)
