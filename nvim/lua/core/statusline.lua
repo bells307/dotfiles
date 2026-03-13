@@ -45,18 +45,23 @@ local mode_hls = {
 	PROMPT = "SLModeOther",
 }
 
+local function hl_fg(name)
+	return vim.api.nvim_get_hl(0, { name = name, link = false }).fg
+end
+
 local function setup_highlights()
-	vim.api.nvim_set_hl(0, "SLModeNormal", { fg = "#1a1a2e", bg = "#a9dc76", bold = true })
-	vim.api.nvim_set_hl(0, "SLModeInsert", { fg = "#1a1a2e", bg = "#78dce8", bold = true })
-	vim.api.nvim_set_hl(0, "SLModeVisual", { fg = "#1a1a2e", bg = "#ab9df2", bold = true })
-	vim.api.nvim_set_hl(0, "SLModeReplace", { fg = "#1a1a2e", bg = "#ff6188", bold = true })
-	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = "#1a1a2e", bg = "#ffd866", bold = true })
-	vim.api.nvim_set_hl(0, "SLModeOther", { fg = "#1a1a2e", bg = "#fc9867", bold = true })
-	vim.api.nvim_set_hl(0, "SLError", { link = "DiagnosticError" })
-	vim.api.nvim_set_hl(0, "SLWarn", { link = "DiagnosticWarn" })
-	vim.api.nvim_set_hl(0, "SLGit", { link = "String" })
-	vim.api.nvim_set_hl(0, "SLLSPName", { link = "Function" })
-	vim.api.nvim_set_hl(0, "SLDim", { link = "Comment" })
+	local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
+	vim.api.nvim_set_hl(0, "SLModeNormal",  { fg = normal_bg, bg = hl_fg("String"),         bold = true })
+	vim.api.nvim_set_hl(0, "SLModeInsert",  { fg = normal_bg, bg = hl_fg("Function"),        bold = true })
+	vim.api.nvim_set_hl(0, "SLModeVisual",  { fg = normal_bg, bg = hl_fg("Type"),            bold = true })
+	vim.api.nvim_set_hl(0, "SLModeReplace", { fg = normal_bg, bg = hl_fg("DiagnosticError"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = normal_bg, bg = hl_fg("DiagnosticWarn"),  bold = true })
+	vim.api.nvim_set_hl(0, "SLModeOther",   { fg = normal_bg, bg = hl_fg("Special"),         bold = true })
+	vim.api.nvim_set_hl(0, "SLError",    { link = "DiagnosticError" })
+	vim.api.nvim_set_hl(0, "SLWarn",     { link = "DiagnosticWarn" })
+	vim.api.nvim_set_hl(0, "SLGit",      { link = "String" })
+	vim.api.nvim_set_hl(0, "SLLSPName",  { link = "Function" })
+	vim.api.nvim_set_hl(0, "SLDim",      { link = "Comment" })
 end
 
 setup_highlights()
@@ -150,10 +155,10 @@ _G.SLLSP = function()
 	end
 	local parts = {}
 	for _, c in ipairs(clients) do
-		local icon = lsp_loading[c.id] and spinner_frames[spinner_idx] or "⣿"
-		parts[#parts + 1] = "%#SLLSPName#" .. c.name .. "%* " .. icon
+		parts[#parts + 1] = "%#SLLSPName#" .. c.name .. "%*"
 	end
-	return table.concat(parts, ", ") .. " "
+	local icon = any_loading and spinner_frames[spinner_idx] or "⣿"
+	return table.concat(parts, ", ") .. " " .. icon .. " "
 end
 
 _G.SLFileInfo = function()
@@ -185,4 +190,4 @@ _G.SLKBLayout = function()
 end
 
 vim.opt.statusline =
-	"%{%v:lua.SLMode()%} %f %m%r %=%{%v:lua.SLLSP()%}%{%v:lua.SLDiag()%}%{%v:lua.SLGit()%}%{%v:lua.SLFileInfo()%}%{%v:lua.SLKBLayout()%}%l:%c %p%% "
+	"%{%v:lua.SLMode()%} %f %m%r %=%{%v:lua.SLLSP()%}%{%v:lua.SLDiag()%}%{%v:lua.SLGit()%}%{%v:lua.SLFileInfo()%}%{%v:lua.SLKBLayout()%}%4l:%-3c %3p%% "
