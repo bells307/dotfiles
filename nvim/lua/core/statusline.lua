@@ -28,8 +28,44 @@ local modes = {
 	t = "TERMINAL",
 }
 
+local mode_hls = {
+	NORMAL = "SLModeNormal",
+	["N-OP"] = "SLModeNormal",
+	INSERT = "SLModeInsert",
+	VISUAL = "SLModeVisual",
+	["V-LINE"] = "SLModeVisual",
+	["V-BLOCK"] = "SLModeVisual",
+	SELECT = "SLModeVisual",
+	["S-LINE"] = "SLModeVisual",
+	["S-BLOCK"] = "SLModeVisual",
+	REPLACE = "SLModeReplace",
+	["V-REPLACE"] = "SLModeReplace",
+	COMMAND = "SLModeCommand",
+	TERMINAL = "SLModeOther",
+	PROMPT = "SLModeOther",
+}
+
+local function setup_highlights()
+	vim.api.nvim_set_hl(0, "SLModeNormal", { fg = "#1a1a2e", bg = "#a9dc76", bold = true })
+	vim.api.nvim_set_hl(0, "SLModeInsert", { fg = "#1a1a2e", bg = "#78dce8", bold = true })
+	vim.api.nvim_set_hl(0, "SLModeVisual", { fg = "#1a1a2e", bg = "#ab9df2", bold = true })
+	vim.api.nvim_set_hl(0, "SLModeReplace", { fg = "#1a1a2e", bg = "#ff6188", bold = true })
+	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = "#1a1a2e", bg = "#ffd866", bold = true })
+	vim.api.nvim_set_hl(0, "SLModeOther", { fg = "#1a1a2e", bg = "#fc9867", bold = true })
+	vim.api.nvim_set_hl(0, "SLError", { link = "DiagnosticError" })
+	vim.api.nvim_set_hl(0, "SLWarn", { link = "DiagnosticWarn" })
+	vim.api.nvim_set_hl(0, "SLGit", { link = "String" })
+	vim.api.nvim_set_hl(0, "SLLSPName", { link = "Function" })
+	vim.api.nvim_set_hl(0, "SLDim", { link = "Comment" })
+end
+
+setup_highlights()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = setup_highlights })
+
 _G.SLMode = function()
-	return modes[vim.api.nvim_get_mode().mode] or "?"
+	local mode = modes[vim.api.nvim_get_mode().mode] or "?"
+	local hl = mode_hls[mode] or "SLModeOther"
+	return "%#" .. hl .. "# " .. mode .. " %*"
 end
 
 _G.SLDiag = function()
@@ -37,10 +73,10 @@ _G.SLDiag = function()
 	local w = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
 	local parts = {}
 	if e > 0 then
-		parts[#parts + 1] = "E:" .. e
+		parts[#parts + 1] = "%#SLError#E:" .. e .. "%*"
 	end
 	if w > 0 then
-		parts[#parts + 1] = "W:" .. w
+		parts[#parts + 1] = "%#SLWarn#W:" .. w .. "%*"
 	end
 	if #parts == 0 then
 		return ""
@@ -53,7 +89,7 @@ _G.SLGit = function()
 	if not d then
 		return ""
 	end
-	local parts = { " " .. d.head }
+	local parts = { "%#SLGit# " .. d.head .. "%*" }
 	if (d.added or 0) > 0 then
 		parts[#parts + 1] = "+" .. d.added
 	end
@@ -66,7 +102,7 @@ _G.SLGit = function()
 	return table.concat(parts, " ") .. " "
 end
 
-local lsp_loading = {} -- client_id -> true when loading
+local lsp_loading = {}
 local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
 local spinner_idx = 1
 
@@ -114,13 +150,30 @@ _G.SLLSP = function()
 	end
 	local parts = {}
 	for _, c in ipairs(clients) do
-		if lsp_loading[c.id] then
-			parts[#parts + 1] = c.name .. " " .. spinner_frames[spinner_idx]
-		else
-			parts[#parts + 1] = c.name .. " ⣿"
-		end
+		local icon = lsp_loading[c.id] and spinner_frames[spinner_idx] or "⣿"
+		parts[#parts + 1] = "%#SLLSPName#" .. c.name .. "%* " .. icon
 	end
 	return table.concat(parts, ", ") .. " "
+end
+
+_G.SLFileInfo = function()
+	local ft = vim.bo.filetype
+	local enc = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.bo.encoding
+	local fmt = vim.bo.fileformat
+	local parts = {}
+	if ft ~= "" then
+		parts[#parts + 1] = ft
+	end
+	if enc ~= "utf-8" then
+		parts[#parts + 1] = enc
+	end
+	if fmt ~= "unix" then
+		parts[#parts + 1] = fmt
+	end
+	if #parts == 0 then
+		return ""
+	end
+	return "%#SLDim#" .. table.concat(parts, " ") .. "%* "
 end
 
 _G.SLKBLayout = function()
@@ -132,4 +185,4 @@ _G.SLKBLayout = function()
 end
 
 vim.opt.statusline =
-	"%{v:lua.SLMode()} | %f %m%r%=%{v:lua.SLLSP()}%{v:lua.SLDiag()}%=%{v:lua.SLGit()}%=%{&fileencoding} %{&fileformat} %{&filetype} %{v:lua.SLKBLayout()}%=%l:%c  %p%%"
+	"%{%v:lua.SLMode()%} %f %m%r %=%{%v:lua.SLLSP()%}%{%v:lua.SLDiag()%}%{%v:lua.SLGit()%}%{%v:lua.SLFileInfo()%}%{%v:lua.SLKBLayout()%}%l:%c %p%% "
