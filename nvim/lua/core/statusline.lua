@@ -66,19 +66,29 @@ _G.SLGit = function()
 	return table.concat(parts, " ") .. " "
 end
 
-local lsp_progress = {} -- client_id -> "loading" | "done"
+local lsp_loading = {} -- client_id -> true when loading
 
 vim.api.nvim_create_autocmd("LspProgress", {
 	callback = function(ev)
 		local value = ev.data.params.value
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		if value and value.kind == "end" then
-			if lsp_progress[ev.data.client_id] then
-				lsp_progress[ev.data.client_id] = "done"
-			end
+			lsp_loading[ev.data.client_id] = nil
+			vim.api.nvim_echo({ { "" } }, false, {})
 		else
-			local client = vim.lsp.get_client_by_id(ev.data.client_id)
 			if client then
-				lsp_progress[ev.data.client_id] = "loading"
+				lsp_loading[ev.data.client_id] = true
+				local msg = client.name
+				if value and value.title and value.title ~= "" then
+					msg = msg .. ": " .. value.title
+				end
+				if value and value.message and value.message ~= "" then
+					msg = msg .. " — " .. value.message
+				end
+				if value and value.percentage then
+					msg = msg .. " (" .. value.percentage .. "%)"
+				end
+				vim.api.nvim_echo({ { msg } }, false, {})
 			end
 		end
 		vim.cmd.redrawstatus()
@@ -86,19 +96,17 @@ vim.api.nvim_create_autocmd("LspProgress", {
 })
 
 _G.SLLSP = function()
-	local parts = {}
-	for id, state in pairs(lsp_progress) do
-		local client = vim.lsp.get_client_by_id(id)
-		if client then
-			if state == "loading" then
-				parts[#parts + 1] = client.name .. " […]"
-			elseif state == "done" then
-				parts[#parts + 1] = client.name .. " [✓]"
-			end
-		end
-	end
-	if #parts == 0 then
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	if #clients == 0 then
 		return ""
+	end
+	local parts = {}
+	for _, c in ipairs(clients) do
+		if lsp_loading[c.id] then
+			parts[#parts + 1] = c.name .. " ~"
+		else
+			parts[#parts + 1] = c.name .. "  "
+		end
 	end
 	return table.concat(parts, ", ") .. " "
 end
