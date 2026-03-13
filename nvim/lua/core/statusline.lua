@@ -119,7 +119,6 @@ vim.api.nvim_create_autocmd("LspProgress", {
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		if value and value.kind == "end" then
 			lsp_loading[ev.data.client_id] = nil
-			utils.log("")
 		else
 			if client then
 				lsp_loading[ev.data.client_id] = true
