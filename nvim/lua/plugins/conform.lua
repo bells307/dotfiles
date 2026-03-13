@@ -3,6 +3,11 @@ require("conform").setup({
 		rust = { "rustfmt" },
 		lua = { "stylua" },
 		sh = { "shfmt" },
+		python = { "ruff_format" },
+		json = { "jq" },
+		jsonc = { "jq" },
+		toml = { "taplo" },
+		yaml = { "yamlfmt" },
 	},
 	format_on_save = {
 		timeout_ms = 500,

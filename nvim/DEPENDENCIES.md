@@ -9,3 +9,9 @@
 - rust-analyzer
 - rustfmt
 - cargo
+- pyright
+- ruff
+- vscode-json-language-server
+- yaml-language-server
+- taplo
+- yamlfmt
