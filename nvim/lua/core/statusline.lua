@@ -1,3 +1,5 @@
+local utils = require("core.utils")
+
 local modes = {
 	n = "NORMAL",
 	no = "N-OP",
@@ -51,17 +53,17 @@ end
 
 local function setup_highlights()
 	local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
-	vim.api.nvim_set_hl(0, "SLModeNormal",  { fg = normal_bg, bg = hl_fg("String"),         bold = true })
-	vim.api.nvim_set_hl(0, "SLModeInsert",  { fg = normal_bg, bg = hl_fg("Function"),        bold = true })
-	vim.api.nvim_set_hl(0, "SLModeVisual",  { fg = normal_bg, bg = hl_fg("Type"),            bold = true })
+	vim.api.nvim_set_hl(0, "SLModeNormal", { fg = normal_bg, bg = hl_fg("String"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeInsert", { fg = normal_bg, bg = hl_fg("Function"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeVisual", { fg = normal_bg, bg = hl_fg("Type"), bold = true })
 	vim.api.nvim_set_hl(0, "SLModeReplace", { fg = normal_bg, bg = hl_fg("DiagnosticError"), bold = true })
-	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = normal_bg, bg = hl_fg("DiagnosticWarn"),  bold = true })
-	vim.api.nvim_set_hl(0, "SLModeOther",   { fg = normal_bg, bg = hl_fg("Special"),         bold = true })
-	vim.api.nvim_set_hl(0, "SLError",    { link = "DiagnosticError" })
-	vim.api.nvim_set_hl(0, "SLWarn",     { link = "DiagnosticWarn" })
-	vim.api.nvim_set_hl(0, "SLGit",      { link = "String" })
-	vim.api.nvim_set_hl(0, "SLLSPName",  { link = "Function" })
-	vim.api.nvim_set_hl(0, "SLDim",      { link = "Comment" })
+	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = normal_bg, bg = hl_fg("DiagnosticWarn"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeOther", { fg = normal_bg, bg = hl_fg("Special"), bold = true })
+	vim.api.nvim_set_hl(0, "SLError", { link = "DiagnosticError" })
+	vim.api.nvim_set_hl(0, "SLWarn", { link = "DiagnosticWarn" })
+	vim.api.nvim_set_hl(0, "SLGit", { link = "String" })
+	vim.api.nvim_set_hl(0, "SLLSPName", { link = "Function" })
+	vim.api.nvim_set_hl(0, "SLDim", { link = "Comment" })
 end
 
 setup_highlights()
@@ -117,7 +119,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		if value and value.kind == "end" then
 			lsp_loading[ev.data.client_id] = nil
-			vim.api.nvim_echo({ { "" } }, false, {})
+			utils.log("")
 		else
 			if client then
 				lsp_loading[ev.data.client_id] = true
@@ -131,7 +133,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
 				if value and value.percentage then
 					msg = msg .. " (" .. value.percentage .. "%)"
 				end
-				vim.api.nvim_echo({ { msg } }, false, {})
+				utils.log(msg)
 			end
 		end
 		vim.cmd.redrawstatus()

@@ -21,3 +21,4 @@ nvim-treesitter/nvim-treesitter-context
 nvim-telescope/telescope.nvim
 nvim-telescope/telescope-ui-select.nvim
 nvim-telescope/telescope-fzf-native.nvim - - make
+christoomey/vim-tmux-navigator
