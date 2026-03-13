@@ -66,16 +66,41 @@ _G.SLGit = function()
 	return table.concat(parts, " ") .. " "
 end
 
+local lsp_progress = {} -- client_id -> "loading" | "done"
+
+vim.api.nvim_create_autocmd("LspProgress", {
+	callback = function(ev)
+		local value = ev.data.params.value
+		if value and value.kind == "end" then
+			if lsp_progress[ev.data.client_id] then
+				lsp_progress[ev.data.client_id] = "done"
+			end
+		else
+			local client = vim.lsp.get_client_by_id(ev.data.client_id)
+			if client then
+				lsp_progress[ev.data.client_id] = "loading"
+			end
+		end
+		vim.cmd.redrawstatus()
+	end,
+})
+
 _G.SLLSP = function()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
-	if #clients == 0 then
+	local parts = {}
+	for id, state in pairs(lsp_progress) do
+		local client = vim.lsp.get_client_by_id(id)
+		if client then
+			if state == "loading" then
+				parts[#parts + 1] = client.name .. " […]"
+			elseif state == "done" then
+				parts[#parts + 1] = client.name .. " [✓]"
+			end
+		end
+	end
+	if #parts == 0 then
 		return ""
 	end
-	local names = {}
-	for _, c in ipairs(clients) do
-		names[#names + 1] = c.name
-	end
-	return table.concat(names, ",") .. " "
+	return table.concat(parts, ", ") .. " "
 end
 
 _G.SLKBLayout = function()

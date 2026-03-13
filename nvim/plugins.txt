@@ -1,0 +1,23 @@
+# Neovim plugins
+# Format: github_repo [dir] [branch] [build_cmd...]
+# Use - as placeholder for default values
+
+rebelot/kanagawa.nvim
+folke/tokyonight.nvim
+catppuccin/nvim catppuccin
+Mofiqul/vscode.nvim
+projekt0n/github-nvim-theme
+sainnhe/everforest
+windwp/nvim-autopairs
+stevearc/conform.nvim
+saecki/crates.nvim
+smoka7/hop.nvim
+lewis6991/gitsigns.nvim
+stevearc/oil.nvim
+nvim-lua/plenary.nvim
+nvim-treesitter/nvim-treesitter
+nvim-treesitter/nvim-treesitter-textobjects
+nvim-treesitter/nvim-treesitter-context
+nvim-telescope/telescope.nvim
+nvim-telescope/telescope-ui-select.nvim
+nvim-telescope/telescope-fzf-native.nvim - - make
