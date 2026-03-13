@@ -67,6 +67,8 @@ _G.SLGit = function()
 end
 
 local lsp_loading = {} -- client_id -> true when loading
+local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
+local spinner_idx = 1
 
 vim.api.nvim_create_autocmd("LspProgress", {
 	callback = function(ev)
@@ -100,12 +102,22 @@ _G.SLLSP = function()
 	if #clients == 0 then
 		return ""
 	end
+	local any_loading = false
+	for _, c in ipairs(clients) do
+		if lsp_loading[c.id] then
+			any_loading = true
+			break
+		end
+	end
+	if any_loading then
+		spinner_idx = (spinner_idx % #spinner_frames) + 1
+	end
 	local parts = {}
 	for _, c in ipairs(clients) do
 		if lsp_loading[c.id] then
-			parts[#parts + 1] = c.name .. " ~"
+			parts[#parts + 1] = c.name .. " " .. spinner_frames[spinner_idx]
 		else
-			parts[#parts + 1] = c.name .. "  "
+			parts[#parts + 1] = c.name .. " ⣿"
 		end
 	end
 	return table.concat(parts, ", ") .. " "
