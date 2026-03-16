@@ -8,6 +8,9 @@ require("conform").setup({
 		jsonc = { "jq" },
 		toml = { "taplo" },
 		yaml = { "yamlfmt" },
+		go = { "goimports", "gofmt" },
+		c = { "clang_format" },
+		cpp = { "clang_format" },
 	},
 	format_on_save = {
 		timeout_ms = 500,

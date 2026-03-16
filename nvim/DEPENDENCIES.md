@@ -15,3 +15,7 @@
 - yaml-language-server
 - taplo
 - yamlfmt
+- gopls
+- goimports
+- clangd
+- clang-format
