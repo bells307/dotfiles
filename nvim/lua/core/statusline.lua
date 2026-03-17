@@ -113,6 +113,12 @@ local lsp_loading = {}
 local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
 local spinner_idx = 1
 
+vim.api.nvim_create_autocmd("LspDetach", {
+	callback = function()
+		vim.cmd.redrawstatus()
+	end,
+})
+
 vim.api.nvim_create_autocmd("LspProgress", {
 	callback = function(ev)
 		local value = ev.data.params.value
@@ -140,7 +146,9 @@ vim.api.nvim_create_autocmd("LspProgress", {
 })
 
 _G.SLLSP = function()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
+	local clients = vim.tbl_filter(function(c)
+		return not c.is_stopped()
+	end, vim.lsp.get_clients({ bufnr = 0 }))
 	if #clients == 0 then
 		return ""
 	end

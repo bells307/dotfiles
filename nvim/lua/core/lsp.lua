@@ -37,6 +37,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = bufnr }))
 			vim.cmd("edit")
 		end, "Restart LSP")
+		map("n", "<leader>cS", function()
+			vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = bufnr }))
+		end, "Stop LSP")
 		map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
 
 		if vim.lsp.inlay_hint then

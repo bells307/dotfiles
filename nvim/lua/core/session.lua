@@ -9,7 +9,9 @@ end
 
 local function save()
 	local file = session_file()
-	local ok, err = pcall(function() vim.cmd("mksession! " .. vim.fn.fnameescape(file)) end)
+	local ok, err = pcall(function()
+		vim.cmd("mksession! " .. vim.fn.fnameescape(file))
+	end)
 	if not ok then
 		vim.notify("Session save failed: " .. err, vim.log.levels.ERROR)
 	end
@@ -26,7 +28,12 @@ local group = vim.api.nvim_create_augroup("Session", { clear = true })
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	group = group,
-	callback = save,
+	callback = function()
+		-- only save if nvim was opened with no file arguments
+		if vim.fn.argc() == 0 then
+			save()
+		end
+	end,
 })
 
 vim.api.nvim_create_autocmd("VimEnter", {
