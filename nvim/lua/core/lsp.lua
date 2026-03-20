@@ -14,6 +14,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Enable completions
 		if client and client:supports_method("textDocument/completion") then
 			vim.lsp.completion.enable(true, ev.data.client_id, bufnr, { autotrigger = true })
+			map("i", "<C-Space>", function()
+				vim.lsp.completion.get()
+			end, "Trigger completion")
 		end
 
 		local builtin = require("telescope.builtin")
