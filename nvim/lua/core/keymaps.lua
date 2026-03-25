@@ -78,6 +78,6 @@ map("n", "<leader>ts", function()
 end, { desc = "Toggle whitespace visualization" })
 
 -- Toggle Russian/English keyboard layout
-map({ "n", "i" }, "<M-Space>", function()
+map({ "n", "i" }, "<S-Tab>", function()
 	vim.opt.iminsert = vim.opt.iminsert:get() == 0 and 1 or 0
 end, { desc = "Toggle Russian/English layout" })
