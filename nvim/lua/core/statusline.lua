@@ -67,7 +67,11 @@ local function setup_highlights()
 end
 
 setup_highlights()
-vim.api.nvim_create_autocmd("ColorScheme", { callback = setup_highlights })
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function()
+		vim.schedule(setup_highlights)
+	end,
+})
 
 _G.SLMode = function()
 	local mode = modes[vim.api.nvim_get_mode().mode] or "?"
