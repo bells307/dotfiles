@@ -1,5 +1,3 @@
-# Minimal .zshrc for remote servers (zsh 5.0.2+)
-
 # History configuration
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
@@ -85,11 +83,11 @@ setopt PROMPT_SUBST
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-            echo -ne '\e[1 q'
+            # echo -ne '\e[2 q'
             PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}:%f '
             ;;
         viins|main)
-            echo -ne '\e[5 q'
+            # echo -ne '\e[2 q'
             PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
             ;;
     esac

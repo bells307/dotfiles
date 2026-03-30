@@ -1,0 +1,15 @@
+#!/bin/sh
+# Detect system appearance and apply matching tmux theme.
+# macOS: follows system light/dark mode. Linux: always dark.
+
+THEME_DIR="$HOME/.config/tmux"
+
+if [ "$(uname)" = "Darwin" ]; then
+    if [ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" = "Dark" ]; then
+        tmux source-file "$THEME_DIR/theme-dark.conf"
+    else
+        tmux source-file "$THEME_DIR/theme-light.conf"
+    fi
+else
+    tmux source-file "$THEME_DIR/theme-dark.conf"
+fi
