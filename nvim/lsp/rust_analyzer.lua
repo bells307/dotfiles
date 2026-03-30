@@ -1,3 +1,22 @@
+local settings = {
+	cargo = {
+		allFeatures = true,
+		loadOutDirsFromCheck = true,
+		buildScripts = {
+			enable = true,
+		},
+	},
+	checkOnSave = true,
+	procMacro = {
+		enable = true,
+		ignored = {
+			["async-trait"] = { "async_trait" },
+			["napi-derive"] = { "napi" },
+			["async-recursion"] = { "async_recursion" },
+		},
+	},
+}
+
 local function goto_location(location)
 	local uri = location.uri or location.targetUri
 	local range = location.range or location.targetSelectionRange
@@ -82,23 +101,6 @@ return {
 	root_dir = vim.fs.dirname(vim.fs.find({ "Cargo.toml" }, { upward = true })[1]),
 	filetypes = { "rust" },
 	settings = {
-		["rust-analyzer"] = {
-			cargo = {
-				allFeatures = true,
-				loadOutDirsFromCheck = true,
-				buildScripts = {
-					enable = true,
-				},
-			},
-			checkOnSave = true,
-			procMacro = {
-				enable = true,
-				ignored = {
-					["async-trait"] = { "async_trait" },
-					["napi-derive"] = { "napi" },
-					["async-recursion"] = { "async_recursion" },
-				},
-			},
-		},
+		["rust-analyzer"] = settings,
 	},
 }
