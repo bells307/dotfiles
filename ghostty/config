@@ -6,7 +6,6 @@ font-family = "JetBrainsMono Nerd Font Mono"
 font-family = "Fira Code"
 
 mouse-scroll-multiplier = 1.0
-cursor-style = block
 macos-option-as-alt = left
 
 keybind = cmd+equal=increase_font_size:0.5

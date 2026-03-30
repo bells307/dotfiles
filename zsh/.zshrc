@@ -26,7 +26,8 @@ setopt ALWAYS_TO_END           # Move cursor after completion
 
 # Key bindings (vim mode)
 bindkey -v
-export KEYTIMEOUT=1                                        # Fast mode switching (10ms)
+# Fast mode switching (10ms)
+export KEYTIMEOUT=1
 
 # History substring search (built-in)
 autoload -U up-line-or-beginning-search down-line-or-beginning-search
@@ -63,17 +64,12 @@ bindkey -a '^X^E' edit-command-line                        # Ctrl+X Ctrl+E edit 
 # Aliases
 alias cd="z"
 alias ls="ls --color"
-alias y=yazi
-alias v=nvim
-alias t=tmux
-alias c=clear
-alias g=git
+alias vi=nvim
 alias ll="ls -lAh"
 alias la="ls -A"
 alias ..="cd .."
 alias ...="cd ../.."
 alias grep="grep --color=auto"
-alias h="history"
 alias dirs="dirs -v"
 
 # Prompt with vim mode indicator
@@ -83,12 +79,12 @@ setopt PROMPT_SUBST
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-            # echo -ne '\e[2 q'
-            PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}:%f '
+            echo -ne '\e[2 q'  # Block cursor
+            # PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}:%f '
             ;;
         viins|main)
-            # echo -ne '\e[2 q'
-            PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
+            echo -ne '\e[6 q'  # Beam cursor
+            # PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
             ;;
     esac
     zle reset-prompt
