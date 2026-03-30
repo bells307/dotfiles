@@ -115,7 +115,7 @@ setopt NOTIFY                  # Report status immediately
 # export ALL_PROXY=socks5://127.0.0.1:1080
 # export NO_PROXY=localhost,127.0.0.1
 
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:/Applications/Obsidian.app/Contents/MacOS:$PATH"
 export EDITOR=nvim
 
 # Shell integrations

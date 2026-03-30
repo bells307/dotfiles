@@ -61,7 +61,7 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	signs = true,
-	underline = true,
+	underline = false,
 	update_in_insert = false,
 	severity_sort = true,
 	float = {

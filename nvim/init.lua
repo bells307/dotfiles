@@ -1,5 +1,5 @@
 require("core.options")
-require("core.session")
+-- require("core.session")
 require("core.keymaps")
 require("core.statusline")
 require("core.lsp")

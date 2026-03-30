@@ -77,6 +77,23 @@ map("n", "<leader>ts", function()
 	vim.opt.list = not vim.opt.list:get()
 end, { desc = "Toggle whitespace visualization" })
 
+-- Toggle diagnostics visibility
+map("n", "<leader>td", function()
+	if vim.diagnostic.is_enabled() then
+		vim.diagnostic.enable(false)
+	else
+		vim.diagnostic.enable(true)
+	end
+end, { desc = "Toggle diagnostics" })
+
+-- Toggle diagnostic underlines
+map("n", "<leader>tu", function()
+	local cfg = vim.diagnostic.config()
+	if cfg then
+		vim.diagnostic.config({ underline = not cfg.underline })
+	end
+end, { desc = "Toggle diagnostic underlines" })
+
 -- Toggle Russian/English keyboard layout
 map({ "n", "i" }, "<S-Tab>", function()
 	vim.opt.iminsert = vim.opt.iminsert:get() == 0 and 1 or 0
