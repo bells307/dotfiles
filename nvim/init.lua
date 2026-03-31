@@ -59,3 +59,19 @@ require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.hop")
 require("plugins.tmux-navigator")
+
+local function apply_colorscheme()
+	vim.cmd("highlight clear")
+	if vim.o.background == "light" then
+		vim.cmd.colorscheme("github_light_default")
+	else
+		vim.cmd.colorscheme("kanagawa")
+	end
+end
+
+vim.api.nvim_create_autocmd("OptionSet", {
+	pattern = "background",
+	callback = apply_colorscheme,
+})
+
+apply_colorscheme()

@@ -1,8 +1,8 @@
 theme = light:GitHub Light Default,dark:Kanagawa Wave
 
-font-family = "Lilex Nerd Font Mono"
-font-family = "Hack Nerd Font Mono"
 font-family = "JetBrainsMono Nerd Font Mono"
+font-family = "Hack Nerd Font Mono"
+font-family = "Lilex Nerd Font Mono"
 font-family = "Fira Code"
 
 mouse-scroll-multiplier = 1.0

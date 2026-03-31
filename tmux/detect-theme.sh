@@ -1,6 +1,4 @@
 #!/bin/sh
-# Detect system appearance and apply matching tmux theme.
-# macOS: follows system light/dark mode. Linux: always dark.
 
 THEME_DIR="$HOME/.config/tmux"
 
