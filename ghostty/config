@@ -1,4 +1,5 @@
-theme = light:GitHub Light Default,dark:Kanagawa Wave
+theme = Kanagawa Wave
+# theme = light:GitHub Light Default,dark:Kanagawa Wave
 
 font-family = "JetBrainsMono Nerd Font Mono"
 font-family = "Hack Nerd Font Mono"
