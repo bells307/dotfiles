@@ -30,7 +30,6 @@ vim.pack.add({
 	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/stevearc/conform.nvim",
 	"https://github.com/saecki/crates.nvim",
-	"https://github.com/smoka7/hop.nvim",
 	"https://github.com/lewis6991/gitsigns.nvim",
 	"https://github.com/stevearc/oil.nvim",
 	"https://github.com/nvim-treesitter/nvim-treesitter",
@@ -57,7 +56,6 @@ require("plugins.gitsigns")
 require("plugins.oil")
 require("plugins.telescope")
 require("plugins.treesitter")
-require("plugins.hop")
 require("plugins.tmux-navigator")
 
 local function apply_colorscheme()

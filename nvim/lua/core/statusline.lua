@@ -47,30 +47,36 @@ local mode_hls = {
 	PROMPT = "SLModeOther",
 }
 
-local sl_ns = vim.api.nvim_create_namespace("statusline")
-
 local function hl_fg(name)
 	return vim.api.nvim_get_hl(0, { name = name, link = false }).fg
 end
 
 local function setup_highlights()
 	local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
-	vim.api.nvim_set_hl(sl_ns, "SLModeNormal", { fg = normal_bg, bg = hl_fg("String"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLModeInsert", { fg = normal_bg, bg = hl_fg("Function"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLModeVisual", { fg = normal_bg, bg = hl_fg("Type"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLModeReplace", { fg = normal_bg, bg = hl_fg("DiagnosticError"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLModeCommand", { fg = normal_bg, bg = hl_fg("DiagnosticWarn"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLModeOther", { fg = normal_bg, bg = hl_fg("Special"), bold = true })
-	vim.api.nvim_set_hl(sl_ns, "SLError", { link = "DiagnosticError" })
-	vim.api.nvim_set_hl(sl_ns, "SLWarn", { link = "DiagnosticWarn" })
-	vim.api.nvim_set_hl(sl_ns, "SLGit", { link = "String" })
-	vim.api.nvim_set_hl(sl_ns, "SLLSPName", { link = "Function" })
-	vim.api.nvim_set_hl(sl_ns, "SLDim", { link = "Comment" })
-	vim.api.nvim_set_hl_ns(sl_ns)
+	if not normal_bg then
+		return
+	end
+	vim.api.nvim_set_hl(0, "SLModeNormal", { fg = normal_bg, bg = hl_fg("String"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeInsert", { fg = normal_bg, bg = hl_fg("Function"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeVisual", { fg = normal_bg, bg = hl_fg("Type"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeReplace", { fg = normal_bg, bg = hl_fg("DiagnosticError"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeCommand", { fg = normal_bg, bg = hl_fg("DiagnosticWarn"), bold = true })
+	vim.api.nvim_set_hl(0, "SLModeOther", { fg = normal_bg, bg = hl_fg("Special"), bold = true })
+	vim.api.nvim_set_hl(0, "SLError", { link = "DiagnosticError" })
+	vim.api.nvim_set_hl(0, "SLWarn", { link = "DiagnosticWarn" })
+	vim.api.nvim_set_hl(0, "SLGit", { link = "String" })
+	vim.api.nvim_set_hl(0, "SLLSPName", { link = "Function" })
+	vim.api.nvim_set_hl(0, "SLDim", { link = "Comment" })
 end
 
 setup_highlights()
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd({ "ColorScheme", "FocusGained" }, {
+	callback = function()
+		vim.schedule(setup_highlights)
+	end,
+})
+vim.api.nvim_create_autocmd("OptionSet", {
+	pattern = "background",
 	callback = function()
 		vim.schedule(setup_highlights)
 	end,
@@ -121,7 +127,8 @@ local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" 
 local spinner_idx = 1
 
 vim.api.nvim_create_autocmd("LspDetach", {
-	callback = function()
+	callback = function(ev)
+		lsp_loading[ev.data.client_id] = nil
 		vim.cmd.redrawstatus()
 	end,
 })
@@ -153,9 +160,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
 })
 
 _G.SLLSP = function()
-	local clients = vim.tbl_filter(function(c)
-		return not c.is_stopped()
-	end, vim.lsp.get_clients({ bufnr = 0 }))
+	local clients = vim.lsp.get_clients({ bufnr = 0 })
 	if #clients == 0 then
 		return ""
 	end
