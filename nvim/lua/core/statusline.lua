@@ -202,6 +202,12 @@ _G.SLFileInfo = function()
 	return "%#SLDim#" .. table.concat(parts, " ") .. "%* "
 end
 
+_G.SLWorkingDir = function()
+	local cwd = vim.fn.getcwd()
+	local name = vim.fn.fnamemodify(cwd, ":t")
+	return "%#SLDim#" .. name .. "%* "
+end
+
 _G.SLKBLayout = function()
 	if vim.api.nvim_get_option_value("keymap", {}) == "" then
 		return ""
@@ -211,4 +217,4 @@ _G.SLKBLayout = function()
 end
 
 vim.opt.statusline =
-	"%{%v:lua.SLMode()%} %f %m%r %=%{%v:lua.SLLSP()%}%{%v:lua.SLDiag()%}%{%v:lua.SLGit()%}%{%v:lua.SLFileInfo()%}%{%v:lua.SLKBLayout()%}%4l:%-3c %3p%% "
+	"%{%v:lua.SLMode()%} %{%v:lua.SLWorkingDir()%}%f %m%r %=%{%v:lua.SLLSP()%}%{%v:lua.SLDiag()%}%{%v:lua.SLGit()%}%{%v:lua.SLFileInfo()%}%{%v:lua.SLKBLayout()%}%4l:%-3c %3p%% "
