@@ -53,9 +53,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		if vim.lsp.inlay_hint then
 			map("n", "<leader>th", function()
-				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+				local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+				vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+				require("core.state").set("inlay_hints", not enabled)
 			end, "Toggle inlay hints")
-			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+			vim.lsp.inlay_hint.enable(require("core.state").get("inlay_hints", true), { bufnr = bufnr })
 		end
 	end,
 })
@@ -67,7 +69,7 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	signs = true,
-	underline = false,
+	underline = require("core.state").get("diagnostic_underline", false),
 	update_in_insert = false,
 	severity_sort = true,
 	float = {

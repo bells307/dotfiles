@@ -95,25 +95,29 @@ map("n", "]w", function()
 	vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
 end)
 
+local state = require("core.state")
+
+vim.wo.wrap = state.get("wrap", false)
+vim.opt.list = state.get("list", false)
+if not state.get("diagnostics", true) then
+	vim.diagnostic.enable(false)
+end
+
 map("n", "<leader>tw", function()
 	vim.wo.wrap = not vim.wo.wrap
+	state.set("wrap", vim.wo.wrap)
 end, { desc = "Toggle word wrap" })
-
-map("n", "<leader>tb", function()
-	vim.o.background = vim.o.background == "dark" and "light" or "dark"
-end, { desc = "Toggle background light/dark" })
 
 map("n", "<leader>ts", function()
 	vim.opt.list = not vim.o.list
+	state.set("list", vim.o.list)
 end, { desc = "Toggle whitespace visualization" })
 
 -- Toggle diagnostics visibility
 map("n", "<leader>td", function()
-	if vim.diagnostic.is_enabled() then
-		vim.diagnostic.enable(false)
-	else
-		vim.diagnostic.enable(true)
-	end
+	local enabled = vim.diagnostic.is_enabled()
+	vim.diagnostic.enable(not enabled)
+	state.set("diagnostics", not enabled)
 end, { desc = "Toggle diagnostics" })
 
 -- Toggle diagnostic underlines
@@ -121,6 +125,7 @@ map("n", "<leader>tu", function()
 	local cfg = vim.diagnostic.config()
 	if cfg then
 		vim.diagnostic.config({ underline = not cfg.underline })
+		state.set("diagnostic_underline", not cfg.underline)
 	end
 end, { desc = "Toggle diagnostic underlines" })
 
