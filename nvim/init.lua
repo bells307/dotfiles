@@ -47,8 +47,8 @@ require("core.keymaps")
 require("core.statusline")
 require("core.lsp")
 require("core.treesitter")
+require("core.colorschemes")
 
-require("plugins.colorschemes")
 require("plugins.autopairs")
 require("plugins.conform")
 require("plugins.crates")
@@ -57,19 +57,3 @@ require("plugins.oil")
 require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.tmux-navigator")
-
-local function apply_colorscheme()
-	vim.cmd("highlight clear")
-	if vim.o.background == "light" then
-		vim.cmd.colorscheme("github_light_default")
-	else
-		vim.cmd.colorscheme("kanagawa")
-	end
-end
-
-vim.api.nvim_create_autocmd("OptionSet", {
-	pattern = "background",
-	callback = apply_colorscheme,
-})
-
-apply_colorscheme()

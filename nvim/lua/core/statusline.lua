@@ -53,6 +53,7 @@ end
 
 local function setup_highlights()
 	local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
+		or vim.api.nvim_get_hl(0, { name = "StatusLine", link = false }).bg
 	if not normal_bg then
 		return
 	end

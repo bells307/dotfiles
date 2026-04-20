@@ -22,12 +22,6 @@ map("n", "<C-Down>", "<cmd>resize -2<CR>")
 map("n", "<C-Left>", "<cmd>vertical resize -2<CR>")
 map("n", "<C-Right>", "<cmd>vertical resize +2<CR>")
 
--- Move lines up/down
-map("n", "<A-j>", "<cmd>m .+1<CR>==")
-map("n", "<A-k>", "<cmd>m .-2<CR>==")
-map("v", "<A-j>", ":m '>+1<CR>gv=gv")
-map("v", "<A-k>", ":m '<-2<CR>gv=gv")
-
 -- Stay in indent mode when indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")

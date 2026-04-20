@@ -1,5 +1,8 @@
 local telescope = require("telescope")
 telescope.setup({
+	defaults = {
+		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+	},
 	extensions = {
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown(),
@@ -8,6 +11,7 @@ telescope.setup({
 })
 telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
+
 
 local b = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", b.find_files, { desc = "Files (respecting .gitignore)" })
