@@ -30,7 +30,15 @@ end
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = function()
 		state.set("colorscheme", vim.g.colors_name)
+		vim.o.background = state.get("background", vim.o.background)
 		vim.schedule(setup_highlights)
+	end,
+})
+
+vim.api.nvim_create_autocmd("OptionSet", {
+	pattern = "background",
+	callback = function()
+		state.set("background", vim.o.background)
 	end,
 })
 
