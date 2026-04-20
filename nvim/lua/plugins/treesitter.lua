@@ -11,7 +11,6 @@ require("nvim-treesitter").install({
 	"toml",
 	"yaml",
 	"json",
-	"jsonc",
 	"markdown",
 	"markdown_inline",
 	"bash",
