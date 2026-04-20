@@ -39,9 +39,29 @@ map("v", "p", '"_dP')
 map({ "n", "v" }, "<leader>d", '"_d')
 
 -- Copy relative filepath to clipboard
-map("n", "<leader>y", function()
+map("n", "<leader>yy", function()
 	vim.fn.setreg("+", vim.fn.expand("%"))
 end, { desc = "Copy relative filepath" })
+
+-- Copy relative filepath with current line
+map("n", "<leader>yl", function()
+	vim.fn.setreg("+", vim.fn.expand("%") .. ":" .. vim.fn.line("."))
+end, { desc = "Copy relative filepath with line" })
+
+-- Copy relative filepath with selected line range
+map("v", "<leader>y", function()
+	local start_line = vim.fn.line("v")
+	local end_line = vim.fn.line(".")
+	if start_line > end_line then
+		start_line, end_line = end_line, start_line
+	end
+	local ref = vim.fn.expand("%") .. ":" .. start_line
+	if start_line ~= end_line then
+		ref = ref .. "-" .. end_line
+	end
+	vim.fn.setreg("+", ref)
+	vim.cmd("normal! \27")
+end, { desc = "Copy relative filepath with line range" })
 
 -- Save
 map("n", "<leader>w", "<cmd>w<CR>")
@@ -56,8 +76,24 @@ map("n", "<S-l>", "<cmd>bnext<CR>")
 map("n", "<leader>bd", "<cmd>bdelete<CR>")
 
 -- Diagnostic navigation
-map("n", "[d", vim.diagnostic.goto_prev)
-map("n", "]d", vim.diagnostic.goto_next)
+map("n", "[d", function()
+	vim.diagnostic.jump({ count = -1 })
+end)
+map("n", "]d", function()
+	vim.diagnostic.jump({ count = 1 })
+end)
+map("n", "[e", function()
+	vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+end)
+map("n", "]e", function()
+	vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+end)
+map("n", "[w", function()
+	vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN })
+end)
+map("n", "]w", function()
+	vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
+end)
 
 map("n", "<leader>tw", function()
 	vim.wo.wrap = not vim.wo.wrap
@@ -68,7 +104,7 @@ map("n", "<leader>tb", function()
 end, { desc = "Toggle background light/dark" })
 
 map("n", "<leader>ts", function()
-	vim.opt.list = not vim.opt.list:get()
+	vim.opt.list = not vim.o.list
 end, { desc = "Toggle whitespace visualization" })
 
 -- Toggle diagnostics visibility
@@ -90,5 +126,5 @@ end, { desc = "Toggle diagnostic underlines" })
 
 -- Toggle Russian/English keyboard layout
 map({ "n", "i" }, "<S-Tab>", function()
-	vim.opt.iminsert = vim.opt.iminsert:get() == 0 and 1 or 0
+	vim.opt.iminsert = vim.o.iminsert == 0 and 1 or 0
 end, { desc = "Toggle Russian/English layout" })

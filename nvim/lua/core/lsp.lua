@@ -37,13 +37,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
 		map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 		map("n", "<leader>cR", function()
-			vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = bufnr }))
+			for _, c in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+				c:stop()
+			end
 			vim.cmd("edit")
 		end, "Restart LSP")
 		map("n", "<leader>cS", function()
-			vim.lsp.stop_client(vim.lsp.get_clients({ bufnr = bufnr }))
+			for _, c in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+				c:stop()
+			end
 		end, "Stop LSP")
-		map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+		map("n", "K", function()
+			vim.lsp.buf.hover({ border = "rounded" })
+		end, "Hover Documentation")
 
 		if vim.lsp.inlay_hint then
 			map("n", "<leader>th", function()
