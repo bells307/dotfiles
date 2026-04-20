@@ -17,18 +17,14 @@ local function apply_colorscheme()
 		-- '~' lines after EOF
 		vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#938AA9" })
 
-		local function hl_fg(name)
-			local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
-			return hl.fg and string.format("#%06x", hl.fg) or nil
-		end
 		-- telescope floating window
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "NONE", fg = hl_fg("Normal") })
+		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "NONE" })
 		-- telescope border
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "NONE", fg = hl_fg("Special") })
+		vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "NONE" })
 		-- input prompt area
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "NONE", fg = hl_fg("Normal") })
+		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "NONE" })
 		-- results list area
-		vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "NONE", fg = hl_fg("Normal") })
+		vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = "NONE" })
 		-- file preview area
 		vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = "NONE" })
 	end
