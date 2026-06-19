@@ -6,6 +6,10 @@ local function setup_highlights()
 	-- '~' lines after EOF (always visible, dimmed)
 	vim.api.nvim_set_hl(0, "EndOfBuffer", { link = "Comment" })
 
+	-- aerial: current symbol highlight (active and inactive window)
+	vim.api.nvim_set_hl(0, "AerialLine", { link = "Visual" })
+	vim.api.nvim_set_hl(0, "AerialLineNC", { link = "Visual" })
+
 	if vim.g.transparent then
 		-- main window background
 		vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })

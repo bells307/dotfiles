@@ -1,14 +1,15 @@
 # theme = GitHub Light Default
-theme = Kanagawa Wave
+# theme = Kanagawa Wave
+# theme = Everforest Dark Hard
 
-background-opacity = 0.85
-background-blur-radius = 20
+# background-opacity = 0.85
+# background-blur-radius = 20
 
+font-family = "JetBrainsMono Nerd Font Mono"
 font-family = "Fira Code"
 font-family = "Lilex Nerd Font Mono"
 font-family = "Iosevka Nerd Font Mono"
 font-family = "Maple Mono NF"
-font-family = "JetBrainsMono Nerd Font Mono"
 font-family = "Hack Nerd Font Mono"
 
 mouse-scroll-multiplier = 1.0

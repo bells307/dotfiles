@@ -1,143 +1,91 @@
-" ============================================================
-" Minimal vimrc — no plugins, safe to copy to remote servers
-" ============================================================
+" ~/.vimrc — minimal QoL config, no plugins
 
-" --- Basics ---
-set nocompatible          " disable Vi compatibility mode
+set nocompatible              " be iMproved (no-op if read as a vimrc)
+syntax on
+filetype plugin indent on
+
+"### Sane defaults ############################################
 set encoding=utf-8
-set history=500
-set undolevels=500
+set hidden                    " switch buffers without saving first
+set backspace=indent,eol,start
+set autoread                  " reload files changed outside Vim
+set mouse=a
+set ttimeoutlen=10            " kill the Esc delay (pairs with tmux escape-time)
+set updatetime=300
 
-" --- UI ---
-set number                " line numbers
-set relativenumber        " relative line numbers (great for jumps)
-set cursorline            " highlight current line
-set showmatch             " highlight matching brackets
-set wildmenu              " enhanced command-line completion
-set laststatus=2          " always show status line
-set showcmd               " show partial command in bottom right
-set scrolloff=5           " keep 5 lines visible around cursor
-set sidescrolloff=5
-
-" --- Status line (no plugin needed) ---
-set statusline=%f\ %m%r%h%w\ [%Y]\ [%{&ff}]\ %=%l/%L\ col:%c\ (%p%%)
-
-" --- Search ---
-set incsearch             " search as you type
-set hlsearch              " highlight search results
-set ignorecase            " case-insensitive search...
-set smartcase             " ...unless query has uppercase
-
-" --- Indentation ---
-set autoindent
-set smartindent
-set expandtab             " spaces instead of tabs
+"### Indentation ##############################################
+set expandtab                 " spaces, not tabs
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set autoindent
+set smartindent
+set shiftround                " round indent to multiples of shiftwidth
 
-" --- Editing ---
-set backspace=indent,eol,start   " sane backspace behavior
-set nojoinspaces                  " one space after . when joining lines
+"### UI #######################################################
+set number
+set relativenumber            " hybrid line numbers
+set scrolloff=5               " keep some context around the cursor
+set sidescrolloff=8
+set showcmd
+set wildmenu
+set wildmode=longest:full,full
+set laststatus=2              " always show the status line
+set ruler
 set nowrap
-set formatoptions-=t              " don't auto-wrap text
+set splitbelow splitright     " open splits where you'd expect
+set signcolumn=yes            " no jitter when signs appear
 
-" --- Files ---
-set autoread              " reload file if changed outside vim
+"### Searching ################################################
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase                 " case-sensitive only if you type a capital
+
+"### Files: keep your dirs clean ##############################
 set noswapfile
 set nobackup
-set nowritebackup
+set undofile
+set undodir=~/.vim/undo//
+if !isdirectory(expand('~/.vim/undo'))
+  call mkdir(expand('~/.vim/undo'), 'p', 0700)
+endif
 
-" --- Splits ---
-set splitright            " new vertical split goes right
-set splitbelow            " new horizontal split goes below
+"### Truecolor + clipboard (guarded for old/feature-less builds)
+if has('termguicolors')
+  set termguicolors
+endif
+if has('clipboard')
+  set clipboard^=unnamed,unnamedplus
+endif
 
-" --- Mouse (works in most terminals) ---
-set mouse=a
-
-" --- Clipboard (works if vim has +clipboard) ---
-set clipboard=unnamed
-
-" --- Misc ---
-set hidden                " allow switching buffers without saving
-set ttyfast
-set lazyredraw
-
-" ============================================================
-" Key mappings
-" ============================================================
-
+"### Mappings #################################################
 let mapleader = " "
 
 " Clear search highlight
-nnoremap <Leader><Space> :nohlsearch<CR>
+nnoremap <silent> <leader><space> :nohlsearch<CR>
 
-" Better window navigation
+" Move by visual lines when wrapping
+nnoremap j gj
+nnoremap k gk
+
+" Window navigation without the C-w prefix
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Move lines up/down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-
-" Keep visual selection after indent
+" Keep selection after indenting in visual mode
 vnoremap < <gv
 vnoremap > >gv
 
-" Yank to end of line (consistent with D and C)
-nnoremap Y y$
+" Quick save / reload config
+nnoremap <leader>w :w<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" Center screen after jumping
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
+" Remember last cursor position when reopening a file
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
 
-" Quick save / quit
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
-
-" Buffer navigation
-nnoremap <Leader>n :bnext<CR>
-nnoremap <Leader>p :bprev<CR>
-nnoremap <Leader>d :bd<CR>
-
-" Open netrw file explorer
-nnoremap <Leader>e :Explore<CR>
-
-" ============================================================
-" Colors and appearance
-" ============================================================
-
-syntax enable
-set background=dark
-
-" Options: default, desert, slate, elflord, industry, torte
-colorscheme default
-
-" Make line numbers less distracting
-highlight LineNr       ctermfg=238
-highlight CursorLineNr ctermfg=yellow cterm=bold
-highlight CursorLine   cterm=none ctermbg=235
-
-" ============================================================
-" Filetype-specific settings
-" ============================================================
-
-filetype plugin indent on
-
-augroup filetype_overrides
-    autocmd!
-    " 2-space indent for common web/config files
-    autocmd FileType yaml,json,html,css,javascript,typescript
-        \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
-    " Wrap and spell for markdown/text
-    autocmd FileType markdown,text
-        \ setlocal wrap linebreak spell spelllang=en_us
-    " Trim trailing whitespace on save
-    autocmd BufWritePre * :%s/\s\+$//e
-augroup END

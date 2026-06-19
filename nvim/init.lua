@@ -39,6 +39,7 @@ vim.pack.add({
 	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
 	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
 	"https://github.com/christoomey/vim-tmux-navigator",
+	"https://github.com/stevearc/aerial.nvim",
 })
 
 require("core.options")
@@ -57,3 +58,4 @@ require("plugins.oil")
 require("plugins.telescope")
 require("plugins.treesitter")
 require("plugins.tmux-navigator")
+require("plugins.aerial")
