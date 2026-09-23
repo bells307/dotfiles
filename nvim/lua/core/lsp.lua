@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "gr", builtin.lsp_references, "Go to references")
 		map("n", "gI", builtin.lsp_implementations, "Go to implentations")
 		map("n", "gy", builtin.lsp_type_definitions, "Type definition")
-		map("n", "<leader>fs", builtin.lsp_document_symbols, "Document symbols")
+		-- map("n", "<leader>fs", builtin.lsp_document_symbols, "Document symbols")
 		map("n", "<leader>fS", builtin.lsp_dynamic_workspace_symbols, "Workspace symbols")
 		map("n", "<leader>fc", builtin.lsp_incoming_calls, "Incoming calls")
 		map("n", "<leader>fC", builtin.lsp_outgoing_calls, "Outgoing calls")
@@ -55,9 +55,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			map("n", "<leader>th", function()
 				local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
 				vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
-				require("core.state").set("inlay_hints", not enabled)
 			end, "Toggle inlay hints")
-			vim.lsp.inlay_hint.enable(require("core.state").get("inlay_hints", true), { bufnr = bufnr })
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		end
 	end,
 })
@@ -69,7 +68,7 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	signs = true,
-	underline = require("core.state").get("diagnostic_underline", false),
+	underline = false,
 	update_in_insert = false,
 	severity_sort = true,
 	float = {

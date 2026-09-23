@@ -20,12 +20,12 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 vim.pack.add({
-	"https://github.com/rebelot/kanagawa.nvim",
 	"https://github.com/folke/tokyonight.nvim",
 	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
-	"https://github.com/Mofiqul/vscode.nvim",
-	"https://github.com/projekt0n/github-nvim-theme",
 	"https://github.com/sainnhe/everforest",
+	"https://github.com/projekt0n/github-nvim-theme",
+	"https://github.com/rebelot/kanagawa.nvim",
+	"https://github.com/Mofiqul/vscode.nvim",
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/windwp/nvim-autopairs",
 	"https://github.com/stevearc/conform.nvim",
@@ -38,17 +38,25 @@ vim.pack.add({
 	"https://github.com/nvim-telescope/telescope.nvim",
 	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
 	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
-	"https://github.com/christoomey/vim-tmux-navigator",
 	"https://github.com/stevearc/aerial.nvim",
 })
 
 require("core.options")
--- require("core.session")
 require("core.keymaps")
 require("core.statusline")
 require("core.lsp")
 require("core.treesitter")
-require("core.colorschemes")
+
+vim.o.background = "dark"
+require("catppuccin").setup({
+	flavour = "frappe",
+	custom_highlights = {
+		EndOfBuffer = { link = "Comment" },
+		AerialLine = { link = "Visual" },
+		AerialLineNC = { link = "Visual" },
+	},
+})
+vim.cmd.colorscheme("catppuccin-frappe")
 
 require("plugins.autopairs")
 require("plugins.conform")
@@ -57,5 +65,4 @@ require("plugins.gitsigns")
 require("plugins.oil")
 require("plugins.telescope")
 require("plugins.treesitter")
-require("plugins.tmux-navigator")
 require("plugins.aerial")

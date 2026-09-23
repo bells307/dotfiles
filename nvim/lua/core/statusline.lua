@@ -70,14 +70,7 @@ local function setup_highlights()
 	vim.api.nvim_set_hl(0, "SLDim", { link = "Comment" })
 end
 
-setup_highlights()
 vim.api.nvim_create_autocmd({ "ColorScheme", "FocusGained" }, {
-	callback = function()
-		vim.schedule(setup_highlights)
-	end,
-})
-vim.api.nvim_create_autocmd("OptionSet", {
-	pattern = "background",
 	callback = function()
 		vim.schedule(setup_highlights)
 	end,

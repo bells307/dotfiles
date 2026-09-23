@@ -1,5 +1,6 @@
 [core]
 	pager = delta
+	excludesfile = /Users/bells/.gitignore_global
 
 [interactive]
 	diffFilter = delta --color-only
@@ -21,3 +22,9 @@
 [user]
 	name = bells307
 	email = bells.dev@proton.me
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

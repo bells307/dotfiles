@@ -1,6 +1,6 @@
 local settings = {
 	cargo = {
-		allFeatures = true,
+		allFeatures = false,
 		loadOutDirsFromCheck = true,
 		buildScripts = {
 			enable = true,
