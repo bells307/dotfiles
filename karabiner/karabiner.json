@@ -41,6 +41,39 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Caps Lock as Hyper (Control+Option+Shift+Command), Caps Lock when tapped",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": [
+                                            "left_control",
+                                            "left_option",
+                                            "left_command"
+                                        ],
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "caps_lock",
+                                        "hold_down_milliseconds": 100
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "description": "Windows-style Ctrl+C/V/A/T/W shortcuts",
                         "manipulators": [
                             {
