@@ -1,44 +1,45 @@
 vim.api.nvim_create_autocmd("PackChanged", {
-	callback = function(ev)
-		local name = ev.data.spec.name
-		local kind = ev.data.kind
-		if kind == "delete" then
-			return
-		end
+  callback = function(ev)
+    local name = ev.data.spec.name
+    local kind = ev.data.kind
+    if kind == "delete" then
+      return
+    end
 
-		if name == "nvim-treesitter" then
-			if not ev.data.active then
-				vim.cmd.packadd("nvim-treesitter")
-			end
-			vim.cmd("TSUpdate")
-		end
+    if name == "nvim-treesitter" then
+      if not ev.data.active then
+        vim.cmd.packadd("nvim-treesitter")
+      end
+      vim.cmd("TSUpdate")
+    end
 
-		if name == "telescope-fzf-native.nvim" then
-			vim.system({ "make" }, { cwd = ev.data.path }):wait()
-		end
-	end,
+    if name == "telescope-fzf-native.nvim" then
+      vim.system({ "make" }, { cwd = ev.data.path }):wait()
+    end
+  end,
 })
 
 vim.pack.add({
-	"https://github.com/folke/tokyonight.nvim",
-	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
-	"https://github.com/sainnhe/everforest",
-	"https://github.com/projekt0n/github-nvim-theme",
-	"https://github.com/rebelot/kanagawa.nvim",
-	"https://github.com/Mofiqul/vscode.nvim",
-	"https://github.com/nvim-lua/plenary.nvim",
-	"https://github.com/windwp/nvim-autopairs",
-	"https://github.com/stevearc/conform.nvim",
-	"https://github.com/saecki/crates.nvim",
-	"https://github.com/lewis6991/gitsigns.nvim",
-	"https://github.com/stevearc/oil.nvim",
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-	"https://github.com/nvim-treesitter/nvim-treesitter-context",
-	"https://github.com/nvim-telescope/telescope.nvim",
-	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
-	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
-	"https://github.com/stevearc/aerial.nvim",
+  "https://github.com/folke/tokyonight.nvim",
+  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+  "https://github.com/sainnhe/everforest",
+  "https://github.com/projekt0n/github-nvim-theme",
+  "https://github.com/rebelot/kanagawa.nvim",
+  "https://github.com/Mofiqul/vscode.nvim",
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/windwp/nvim-autopairs",
+  "https://github.com/stevearc/conform.nvim",
+  "https://github.com/saecki/crates.nvim",
+  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/stevearc/oil.nvim",
+  "https://github.com/nvim-treesitter/nvim-treesitter",
+  "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+  "https://github.com/nvim-treesitter/nvim-treesitter-context",
+  "https://github.com/nvim-telescope/telescope.nvim",
+  "https://github.com/nvim-telescope/telescope-ui-select.nvim",
+  "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+    "https://github.com/nvim-telescope/telescope-live-grep-args.nvim",
+  "https://github.com/stevearc/aerial.nvim",
 })
 
 require("core.options")
@@ -49,12 +50,12 @@ require("core.treesitter")
 
 vim.o.background = "dark"
 require("catppuccin").setup({
-	flavour = "frappe",
-	custom_highlights = {
-		EndOfBuffer = { link = "Comment" },
-		AerialLine = { link = "Visual" },
-		AerialLineNC = { link = "Visual" },
-	},
+  flavour = "frappe",
+  custom_highlights = {
+    EndOfBuffer = { link = "Comment" },
+    AerialLine = { link = "Visual" },
+    AerialLineNC = { link = "Visual" },
+  },
 })
 vim.cmd.colorscheme("catppuccin-frappe")
 
